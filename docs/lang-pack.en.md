@@ -25,6 +25,7 @@ The file name without `.json` is the pack id (for example `zh-CN`). The name in 
 - `@name` appears only in the language menu and is not substituted into the UI.
 - An empty value means “leave the original text”. Do not use empty to mean “hide”.
 - Menu accelerators sit after `\t` in the source (e.g. `Play\tSpace`). Translate only the visible part before `\t`.
+- Column headers may contain zero-width format characters; those are stripped before lookup. `%year%` / `%length%` wrappers are also accepted as keys.
 - Do not translate product names, paths, URLs, `foo_*` component ids, track titles, font names, Title Formatting, or config scripts.
 
 To start a new language, copy `en-US-template.json` (all values empty), change `@name` and the file name, then fill in translations.

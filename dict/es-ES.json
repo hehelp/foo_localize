@@ -114,6 +114,7 @@
   "Composer": "Compositor",
   "Performer": "Intérprete",
   "Duration": "Duración",
+  "Length": "Duración",
   "Bitrate": "Tasa de bits",
   "Sample Rate": "Frecuencia de muestreo",
   "Channels": "Canales",
