@@ -3,3 +3,4 @@ Thumbs.db
 *.fb2k-component
 *.dll
 *.component
+sdk/sample/build/
