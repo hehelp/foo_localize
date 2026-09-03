@@ -1,11 +1,12 @@
 #pragma once
 
 // Public foobar2000 service API for foo_localize.
-// Other components: include this header, then
+// Other C++ components: include this header, then
 //   localize_api::ptr api;
 //   if (localize_api::tryGet(api)) { ... }
 // To hear language changes, implement localize_notify and register
 //   FB2K_SERVICE_FACTORY(your_notify);
+// JS panels (Windows only): ActiveXObject("FooLocalize.Engine")
 // GUIDs: {5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17} / {C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}
 // Sample component: sdk/sample/
 
