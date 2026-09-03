@@ -2,11 +2,18 @@
 
 foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.1.0`。English: [README_en.md](README_en.md)。
+当前组件版本：`1.2.0`。English: [README_en.md](README_en.md)。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.2.0（2026-09-04）
+
+- Windows：可开关「启用静态资源动态翻译」，字符串表与对话框模板按词典替换
+- Windows：JScript Panel / Spider Monkey Panel 可用 `new ActiveXObject("FooLocalize.Engine")` 翻译自绘文本
+- Windows：Default UI 顶栏启动即为译文，窗口不再为此抖动
+- 静态资源与 COM 仅 Windows；macOS 行为与 1.1.0 相同
 
 ### 1.1.0（2026-09-03）
 
@@ -65,7 +72,7 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.1.0.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.2.0.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 
@@ -83,7 +90,7 @@ foobar 正在运行时无法覆盖 DLL，请先退出再拷。
 ## 使用
 
 - **总开关**：初次安装后默认关闭。先 `查看 → 动态多语引擎 → 启用多语引擎`，或在首选项里勾选启用。
-- **范围**：可分别开关「翻译菜单」「翻译对话框」「翻译播放列表和媒体库」。
+- **范围**：可分别开关「翻译菜单」「翻译对话框」「翻译播放列表和媒体库」。Windows 另有「启用静态资源动态翻译」（受总开关约束，默认关）。
 - **切语言**：`查看 → 动态多语引擎 → 语言`，或 **文件 → 首选项 → 显示 → 动态多语引擎**。
 - **开发者模式**：同在 `查看 → 动态多语引擎`。
 - 开发者模式会把未翻译的界面英文追加到 `foo-lang/harvest.txt`。把新键合并进对应 JSON 后，再选一次语言或重启即可。
@@ -132,4 +139,8 @@ Windows **Columns UI 状态栏**音量格目前画的是 `-3.00 dB`，没有可�
 
 ## 给其他组件的 API
 
-头文件和可编译示例在 [`sdk/`](sdk/README.md)。把 [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：[`sdk/sample/`](sdk/sample/README.md)。说明见 [组件 API](docs/api.md)。
+C++ 组件：头文件和可编译示例在 [`sdk/`](sdk/README.md)。把 [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：[`sdk/sample/`](sdk/sample/README.md)。
+
+JScript / SMP 面板（仅 Windows）：`new ActiveXObject("FooLocalize.Engine")`，只读方法 `Translate` / `GetLanguage` / `IsEnabled`。未安装本组件时 `try/catch` 回退英文。
+
+说明见 [组件 API](docs/api.md)。

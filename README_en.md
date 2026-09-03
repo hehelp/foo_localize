@@ -2,11 +2,18 @@
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.1.0`. 中文：[README.md](README.md).
+Component version: `1.2.0`. 中文：[README.md](README.md).
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.2.0 (2026-09-04)
+
+- Windows: optional static-resource translation (string tables and dialog templates)
+- Windows: JScript Panel / Spider Monkey Panel can call `new ActiveXObject("FooLocalize.Engine")` for owner-drawn text
+- Windows: Default UI menu bar is translated on startup, without a window jump
+- Static resources and COM are Windows-only; macOS matches 1.1.0
 
 ### 1.1.0 (2026-09-03)
 
@@ -65,7 +72,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.1.0.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.2.0.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 
@@ -83,7 +90,7 @@ foobar cannot overwrite the DLL while it is running. Quit first.
 ## Usage
 
 - **Master switch**: Off after a fresh install. Enable it under **View → Dynamic Multilingual Engine → Enable**, or in Preferences.
-- **Scopes**: separately enable menus, dialogs, and playlist / library text.
+- **Scopes**: separately enable menus, dialogs, and playlist / library text. Windows also has **Enable static resource translation** (gated by the master switch, off by default).
 - **Switch language**: **View → Dynamic Multilingual Engine → Language**, or **File → Preferences → Display → Dynamic Multilingual Engine**.
 - **Developer Mode**: same **View → Dynamic Multilingual Engine** submenu.
 - Developer Mode appends unmatched UI English to `foo-lang/harvest.txt`. Merge new keys into the JSON, then pick the language again or restart.
@@ -132,4 +139,8 @@ Enable the engine, the three translation scopes, Developer Mode, and choose a la
 
 ## API for other components
 
-The header and a buildable sample live in [`sdk/`](sdk/README.md). Copy [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: [`sdk/sample/`](sdk/sample/README.md). See [Component API](docs/api.md).
+C++ components: the header and a buildable sample live in [`sdk/`](sdk/README.md). Copy [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: [`sdk/sample/`](sdk/sample/README.md).
+
+JScript / SMP panels (Windows only): `new ActiveXObject("FooLocalize.Engine")` with read-only `Translate` / `GetLanguage` / `IsEnabled`. If the component is not installed, catch the error and keep English.
+
+See [Component API](docs/api.md).

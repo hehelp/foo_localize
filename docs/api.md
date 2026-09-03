@@ -62,3 +62,20 @@ GUID：
 | --- | --- |
 | `localize_api` | `{5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17}` |
 | `localize_notify` | `{C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}` |
+
+## JS 面板（Windows）
+
+JScript Panel / Spider Monkey Panel 的 `gr.DrawString` 不走系统钩子，也拿不到上面的 C++ 服务。用 COM：
+
+```javascript
+var engine = null;
+try {
+    engine = new ActiveXObject("FooLocalize.Engine");
+} catch (e) {}
+
+function _(text) {
+    return engine ? engine.Translate(text) : text;
+}
+```
+
+只读：`Translate(text)`、`GetLanguage()`、`IsEnabled()`。总开关关闭或词典未命中时 `Translate` 返回原文。不要把路径、曲目名传进去。macOS 没有这条接口。
