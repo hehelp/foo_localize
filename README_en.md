@@ -2,11 +2,15 @@
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.2.1`. 中文：[README.md](README.md).
+Component version: `1.2.2`. 中文：[README.md](README.md).
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.2.2 (2026-09-04)
+
+- Windows x64: fix 1.2.1 rejecting nearly all UI text pointers, which left runtime strings and the Default UI menu bar untranslated
 
 ### 1.2.1 (2026-09-04)
 
@@ -76,7 +80,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.2.1.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.2.2.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 
