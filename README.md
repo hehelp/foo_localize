@@ -2,11 +2,15 @@
 
 foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.2.1`。English: [README_en.md](README_en.md)。
+当前组件版本：`1.2.2`。English: [README_en.md](README_en.md)。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.2.2（2026-09-04）
+
+- Windows x64：修复 1.2.1 误把几乎所有界面文本当成无效指针，导致运行时字符串和 Default UI 主菜单不翻译
 
 ### 1.2.1（2026-09-04）
 
@@ -76,7 +80,7 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.2.1.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.2.2.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 
