@@ -2,11 +2,19 @@
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.2.2`. 中文：[README.md](README.md).
+Component version: `1.3.0`. 中文：[README.md](README.md).
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.3.0 (2026-09-05)
+
+- Standalone language-pack window: preview a pack, merge into a target language, and edit translations in the list
+- Windows: new **Translate DUI main menu** switch (on by default; also requires **Translate menus**); paint uses bar titles and the BeginPaint window so Preferences no longer stacks English under Chinese
+- Windows: playlist translation applies only to the main window, so plugin dialogs such as YouTube **Find in page** no longer ghost
+- Simplified Chinese pack: Playing / Artist/album / Title / track artist / Track no
+- Pack manager, DUI switch, and content-scope rules are Windows-only; macOS matches 1.2.2
 
 ### 1.2.2 (2026-09-04)
 
@@ -80,7 +88,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.2.2.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download **`foo_localize-1.3.0.fb2k-component`** (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 
@@ -98,8 +106,8 @@ foobar cannot overwrite the DLL while it is running. Quit first.
 ## Usage
 
 - **Master switch**: Off after a fresh install. Enable it under **View → Dynamic Multilingual Engine → Enable**, or in Preferences.
-- **Scopes**: separately enable menus, dialogs, and playlist / library text. Windows also has **Enable static resource translation** (gated by the master switch, off by default).
-- **Switch language**: **View → Dynamic Multilingual Engine → Language**, or **File → Preferences → Display → Dynamic Multilingual Engine**.
+- **Scopes**: separately enable menus, **Translate DUI main menu**, dialogs, and playlist / library text. Windows also has **Enable static resource translation** (gated by the master switch, off by default).
+- **Switch language**: **View → Dynamic Multilingual Engine → Language**, or **File → Preferences → Display → Dynamic Multilingual Engine**. **Manage packs** edits entries and merges harvest files.
 - **Developer Mode**: same **View → Dynamic Multilingual Engine** submenu.
 - Developer Mode appends unmatched UI English to `foo-lang/harvest.txt`. Merge new keys into the JSON, then pick the language again or restart.
 
@@ -143,7 +151,7 @@ The Windows **Columns UI** status-bar volume cell currently draws `-3.00 dB`, no
 
 **File → Preferences → Display → Dynamic Multilingual Engine** (Chinese UI: **动态多语引擎**)
 
-Enable the engine, the three translation scopes, Developer Mode, and choose a language pack. The View menu group follows the UI language: **动态多语引擎** in Chinese, **Dynamic Multilingual Engine** in English.
+Enable the engine, the translation scopes (including the DUI main menu), Developer Mode, and choose a language pack. **Manage packs** opens a window to edit entries. The View menu group follows the UI language: **动态多语引擎** in Chinese, **Dynamic Multilingual Engine** in English.
 
 ## API for other components
 

@@ -2,11 +2,19 @@
 
 foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.2.2`。English: [README_en.md](README_en.md)。
+当前组件版本：`1.3.0`。English: [README_en.md](README_en.md)。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.3.0（2026-09-05）
+
+- 独立语言包管理窗口：选包预览、合并到目标语言、列表内直接改译文
+- Windows：新增「翻译 DUI 主菜单」开关（默认开，须同时开「翻译菜单」）；绘制按顶栏词与 BeginPaint 窗口区分，减少首选项叠字
+- Windows：翻译播放列表只作用于主窗口，避免 YouTube「页面中搜寻」等插件对话框重影
+- 简中词典补：Playing / Artist/album / Title / track artist / Track no
+- 语言包管理、DUI 开关与内容轨范围仅 Windows；macOS 行为与 1.2.2 相同
 
 ### 1.2.2（2026-09-04）
 
@@ -80,7 +88,7 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.2.2.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 **`foo_localize-1.3.0.fb2k-component`**（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 
@@ -98,8 +106,8 @@ foobar 正在运行时无法覆盖 DLL，请先退出再拷。
 ## 使用
 
 - **总开关**：初次安装后默认关闭。先 `查看 → 动态多语引擎 → 启用多语引擎`，或在首选项里勾选启用。
-- **范围**：可分别开关「翻译菜单」「翻译对话框」「翻译播放列表和媒体库」。Windows 另有「启用静态资源动态翻译」（受总开关约束，默认关）。
-- **切语言**：`查看 → 动态多语引擎 → 语言`，或 **文件 → 首选项 → 显示 → 动态多语引擎**。
+- **范围**：可分别开关「翻译菜单」「翻译 DUI 主菜单」「翻译对话框」「翻译播放列表和媒体库」。Windows 另有「启用静态资源动态翻译」（受总开关约束，默认关）。
+- **切语言**：`查看 → 动态多语引擎 → 语言`，或 **文件 → 首选项 → 显示 → 动态多语引擎**。点「语言包管理」可编辑词条、合并捕鱼文件。
 - **开发者模式**：同在 `查看 → 动态多语引擎`。
 - 开发者模式会把未翻译的界面英文追加到 `foo-lang/harvest.txt`。把新键合并进对应 JSON 后，再选一次语言或重启即可。
 
@@ -143,7 +151,7 @@ Windows **Columns UI 状态栏**音量格目前画的是 `-3.00 dB`，没有可�
 
 **文件 → 首选项 → 显示 → 动态多语引擎**
 
-可开关引擎、三个翻译范围、打开开发者模式、选择语言包。查看菜单分组名跟界面语言走：中文 **动态多语引擎**，英文 **Dynamic Multilingual Engine**。
+可开关引擎、翻译范围（含 DUI 主菜单）、打开开发者模式、选择语言包。点「语言包管理」可在独立窗口编辑词条。查看菜单分组名跟界面语言走：中文 **动态多语引擎**，英文 **Dynamic Multilingual Engine**。
 
 ## 给其他组件的 API
 
