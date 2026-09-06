@@ -34,8 +34,11 @@ To start a new language, copy `en-US-template.json` (all values empty), change `
 
 1. In foobar: **View → Dynamic Multilingual Engine → Developer Mode**.
 2. Open the windows or menus that are still in English.
-3. Open `foo-lang/harvest.txt` and merge new lines into the JSON (key = source, value = translation).
-4. Pick the language again, or restart foobar.
+3. Open **Manage packs** (menu or Preferences): edit the pack on the left, handle `harvest.txt` on the right, or translate sources online. Changing packs in that window is for editing only and does not switch foobar2000's target language.
+4. Or open `foo-lang/harvest.txt` and merge new lines into the JSON (key = source, value = translation).
+5. Pick the language again, or restart foobar.
+
+The online engine, AppID, and secret live under **Preferences → Display → Dynamic Multilingual Engine**. Public Google may rate-limit; official credentials are more reliable.
 
 Keep the same key set across packs. The shipped packs follow the keys in `zh-CN.json`.
 
