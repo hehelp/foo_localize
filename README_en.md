@@ -2,11 +2,16 @@
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.4.0`. 中文：[README.md](README.md).
+Component version: `1.4.1`. 中文：[README.md](README.md).
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.4.1 (2026-09-06)
+
+- Language-pack window: right-click to copy the source or the translation separately
+- About 99 new Simplified Chinese entries (column headers, Klyrics, visualizations, Cover Art Archive, and more), synced to Traditional Chinese / Japanese / Russian / Spanish / German / French
 
 ### 1.4.0 (2026-09-06)
 
