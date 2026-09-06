@@ -7,9 +7,11 @@ Windows（`win/`）：
 - `install-zh.png` / `install.png` — 首选项 · 组件
 - `menu-item-zh.png` / `menu-item.png` — 查看 → 动态多语引擎
 - `setting-zh.png` / `setting.png` — 首选项 · 动态多语引擎
+- `manage-zh.png` / `manage.png` — 语言包管理
 
 macOS（`macOS/`）：
 
 - `install-zh.png` / `install.png` — 首选项 · 组件
 - `view-item-zh.png` / `view-item.png` — 查看 → 动态多语引擎
 - `setting-zh.png` / `setting.png` — 首选项 · 动态多语引擎
+- `manage-zh.png` / `manage.png` — 语言包管理
