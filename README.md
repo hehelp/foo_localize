@@ -174,4 +174,4 @@ C++ 组件：头文件和可编译示例在 [`sdk/`](sdk/README.md)。把 [`sdk/
 
 JScript / SMP 面板（仅 Windows）：`new ActiveXObject("FooLocalize.Engine")`，只读方法 `Translate` / `GetLanguage` / `IsEnabled`。未安装本组件时 `try/catch` 回退英文。
 
-说明见 [组件 API](docs/api.md)。
+说明见 [组件 API](docs/api.md)。English: [docs/api.en.md](docs/api.en.md)。

@@ -174,4 +174,4 @@ C++ components: the header and a buildable sample live in [`sdk/`](sdk/README.md
 
 JScript / SMP panels (Windows only): `new ActiveXObject("FooLocalize.Engine")` with read-only `Translate` / `GetLanguage` / `IsEnabled`. If the component is not installed, catch the error and keep English.
 
-See [Component API](docs/api.md).
+See [Component API](docs/api.en.md). 中文：[docs/api.md](docs/api.md).
