@@ -6,9 +6,9 @@
 //   if (localize_api::tryGet(api)) { ... }
 // To hear language changes, implement localize_notify and register
 //   FB2K_SERVICE_FACTORY(your_notify);
-// JS panels (Windows only): ActiveXObject("FooLocalize.Engine")
+// JS panels (Windows only): ActiveXObject("FooLocalize.Engine") — see doc/09.
 // GUIDs: {5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17} / {C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}
-// Sample component: sdk/sample/
+// Public copy + sample plugin: github/sdk/
 
 #if __has_include(<foobar2000.h>)
 #include <foobar2000.h>
@@ -32,6 +32,26 @@ public:
     // true and writes the translation when the dictionary hits; false leaves out_translated unused.
     virtual bool translate(const char* original_text, pfc::string_base& out_translated) = 0;
     virtual bool translate_w(const wchar_t* original_text, pfc::string_base& out_translated_utf8) = 0;
+
+    // Optional context for rule objects. nullptr site uses __default__ only (same as translate).
+    struct localize_site {
+        const char* wnd_class = nullptr;
+        int ctrl_id = 0;
+        unsigned menu_id = 0;
+        int x = 0;
+        int y = 0;
+        int w = 0;
+        int h = 0;
+#ifdef _WIN32
+        HWND hwnd = nullptr;
+#endif
+    };
+
+    virtual bool translate_site(const char* original_text, const localize_site* site, pfc::string_base& out_translated) = 0;
+    virtual bool translate_site_w(const wchar_t* original_text, const localize_site* site, pfc::string_base& out_translated_utf8) = 0;
+    virtual bool has_translation(const char* original_text, const char* lang_name) = 0;
+    virtual bool add_translation(const char* original_text, const char* translated_text, const char* lang_name) = 0;
+    virtual bool modify_translation(const char* original_text, const char* translated_text, const char* lang_name) = 0;
 
     static bool tryGet(ptr& out) { return enumerate().first(out); }
     static ptr tryGet() {
