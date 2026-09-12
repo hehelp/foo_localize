@@ -91,7 +91,7 @@ The site comes from the Windows control (class name, `GetDlgCtrlID`, menu item `
 
 First match wins:
 
-1. **`when`**: first clause whose conditions all match. Use its `text`. `false` or empty → **do not translate** (stop; do not fall through).
+1. **`when`**: first clause whose conditions all match and whose `text` is a non-empty string. `text: false` → **do not translate** (stop). Missing or empty `text` only records the site and falls through to later clauses / `__default__` (this is how harvest-imported location clauses work).
 2. **Class map**: any other key (not reserved) whose value is a non-empty string is a Win32 class name → specific translation. Class names are case-insensitive. A hit translates immediately; exclude lists are not applied.
 3. **`exclude_classes`**: current class is in the list → do not translate.
 4. **`exclude_ids`**: current control ID is in the list → do not translate. ID `0` is never excluded.
