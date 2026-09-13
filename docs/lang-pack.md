@@ -9,7 +9,7 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 - Windows：`%APPDATA%\foobar2000-v2\foo-lang\`
 - macOS：`~/Library/foobar2000-v2/foo-lang\`
 
-**只写还不存在的文件，不覆盖已有 JSON。** 本仓库 [`dict/`](../dict/) 与内置种子相同，可对照或另存。
+**只写还不存在的文件，不覆盖已有 JSON。** 本仓库 `[dict/](../dict/)` 与内置种子相同，可对照或另存。
 
 文件名（不含 `.json`）是语言包 id，例如 `zh-CN`。菜单里的显示名读 JSON 顶层的 `@name`。
 
@@ -64,10 +64,12 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 
 只要总开关打开、该范围（菜单 / 对话框 / 播放列表）也打开，**不论**控件类名、ID、菜单 ID、坐标，一律换成这个译文。这是最快路径，引擎不会去取窗口位置。
 
-| 值 | 效果 |
-| --- | --- |
-| `"播放"` | 译成「播放」 |
-| `""` | 视为未命中，画面保持英文原文。不要用空串表示「隐藏控件」 |
+
+| 值      | 效果                           |
+| ------ | ---------------------------- |
+| `"播放"` | 译成「播放」                       |
+| `""`   | 视为未命中，画面保持英文原文。不要用空串表示「隐藏控件」 |
+
 
 99% 的词条应写成字符串。只有同一句英文在不同位置含义不同、或某处不该译时，才用下面的规则对象。
 
@@ -83,7 +85,7 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 
 没有这些字段的对象（例如 `"Title": { "SysHeader32": "标题" }`）会被当成分组，错误地拆成键 `SysHeader32`。规则对象请至少写一个 `__default__`。
 
-无位置信息的调用（C++ `translate`、JS `Translate(text)`）**只看 `__default__`**，其它筛选项一律不生效。挂钩绘制、`translate_site`、`Translate(text, hwnd)` 才会带上位置。
+无位置信息的调用（C++ `translate`、JS `Translate(text)`）**只看** `__default__`，其它筛选项一律不生效。挂钩绘制、`translate_site`、`Translate(text, hwnd)` 才会带上位置。
 
 位置来自 Windows 控件（类名、`GetDlgCtrlID`、菜单项 `wID`、绘制矩形）。macOS 挂钩目前拿不到 Class / ID，规则在 Mac 上基本只走 `__default__`。
 
@@ -91,14 +93,14 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 
 按下面顺序，**先命中先返回**：
 
-1. **`when`**：从上到下找第一条条件全部满足、且写出了非空 `text` 的条款。`text` 为 `false` 则**不译**（不再往后走）。缺省或空 `text` 只记录位置，继续看后面的条款和默认译文（捕鱼添加时带入的位置条款就是这样）。
+1. `when`：从上到下找第一条条件全部满足、且写出了非空 `text` 的条款。`text` 为 `false` 则**不译**（不再往后走）。缺省或空 `text` 只记录位置，继续看后面的条款和默认译文（捕鱼添加时带入的位置条款就是这样）。
 2. **类名映射**：其它键（非保留字段）若值是非空字符串，当作 Win32 类名 → 专用译文。类名大小写不敏感。命中则立刻翻译，后面的排除列表不再看。
-3. **`exclude_classes`**：当前控件类名在列表里 → 不译。
-4. **`exclude_ids`**：当前控件 ID 在列表里 → 不译。ID `0` 不会被排除。
-5. **`exclude_menu_ids`**：当前菜单项 ID（非 0）在列表里 → 不译。
-6. **`require_classes`**：列表非空，且类名不在其中 → 不译。
-7. **`include_ids`**：列表非空，且控件 ID 不在其中 → 不译。
-8. **`__default__`**：以上都通过后，用默认译文；为 `false`、缺省或空串则不译。
+3. `exclude_classes`：当前控件类名在列表里 → 不译。
+4. `exclude_ids`：当前控件 ID 在列表里 → 不译。ID `0` 不会被排除。
+5. `exclude_menu_ids`：当前菜单项 ID（非 0）在列表里 → 不译。
+6. `require_classes`：列表非空，且类名不在其中 → 不译。
+7. `include_ids`：列表非空，且控件 ID 不在其中 → 不译。
+8. `__default__`：以上都通过后，用默认译文；为 `false`、缺省或空串则不译。
 
 `positions`（规则顶层）会做 ±2 像素比对，但写了 `__default__` 时无论坐标准不准确都会落到第 8 步。按坐标区分译文请写在 `when` 里。
 
@@ -121,15 +123,17 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 }
 ```
 
-| 条款字段 | 类型 | 含义 |
-| --- | --- | --- |
-| `text` | 字符串或 `false` | 命中后的译文；`false` / 空 = 此处不译。 |
-| `class` / `classes` | 字符串或字符串数组 | 控件类名，大小写不敏感。 |
-| `id` / `ids` | 数字或数组 | 对话框控件 ID。 |
-| `menu_id` / `menu_ids` | 数字或数组 | 菜单项 ID。 |
-| `x` `y` `w` `h` | 数字 | 一条矩形，±2 像素内算命中。 |
-| `pos` | `{x,y,w,h}` | 同上。 |
-| `positions` | 对象数组 | 多条矩形，命中任一即可。 |
+
+| 条款字段                     | 类型           | 含义                         |
+| ------------------------ | ------------ | -------------------------- |
+| `text`EnableTranslation | 字符串或 `false` | 命中后的译文；`false` / 空 = 此处不译。 |
+| `class` / `classes`      | 字符串或字符串数组    | 控件类名，大小写不敏感。               |
+| `id` / `ids`             | 数字或数组        | 对话框控件 ID。                  |
+| `menu_id` / `menu_ids`   | 数字或数组        | 菜单项 ID。                    |
+| `x` `y` `w` `h`          | 数字           | 一条矩形，±2 像素内算命中。            |
+| `pos`                    | `{x,y,w,h}`  | 同上。                        |
+| `positions`              | 对象数组         | 多条矩形，命中任一即可。               |
+
 
 没有写的条件表示不限制。例如只写 `"id": 105` 时，不管类名是什么。没有位置的 `Translate(text)` 不跑 `when`，只用 `__default__`。
 
@@ -137,17 +141,19 @@ English: [lang-pack.en.md](lang-pack.en.md)。
 
 #### 保留字段
 
-| 字段 | 类型 | 含义 |
-| --- | --- | --- |
-| `__default__` | 字符串或 `false` | 筛选项都通过（或没有位置）时的译文。`false` / 空 = 默认不译。 |
-| `when` | 对象数组 | 有序条件译文，见上一节。 |
-| `exclude_classes` | 字符串数组 | 这些 Win32 类上**不要**译。常见：`SysListView32`（列表内容）、`Edit`（输入框）、`SysTreeView32`。 |
-| `require_classes` | 字符串数组 | 只在这些类上译。类名对不上（或拿不到类名）则不译。 |
-| `exclude_ids` | 数字或数字字符串数组 | 这些对话框控件 ID 上不要译。 |
-| `include_ids` | 数字或数字字符串数组 | 只在这些控件 ID 上译。 |
-| `exclude_menu_ids` | 数字或数字字符串数组 | 这些菜单项 ID 上不要译。 |
-| `positions` | 对象数组 | `{ "x", "y", "w", "h" }`，与捕鱼注释里的 `Pos` 对应。见上方限制。 |
-| *其它键* | 非空字符串 | 当作类名映射，例如 `"SysHeader32": "标题"`、`"Button": "播放"`。 |
+
+| 字段                 | 类型           | 含义                                                                       |
+| ------------------ | ------------ | ------------------------------------------------------------------------ |
+| `__default__`      | 字符串或 `false` | 筛选项都通过（或没有位置）时的译文。`false` / 空 = 默认不译。                                    |
+| `when`             | 对象数组         | 有序条件译文，见上一节。                                                             |
+| `exclude_classes`  | 字符串数组        | 这些 Win32 类上**不要**译。常见：`SysListView32`（列表内容）、`Edit`（输入框）、`SysTreeView32`。 |
+| `require_classes`  | 字符串数组        | 只在这些类上译。类名对不上（或拿不到类名）则不译。                                                |
+| `exclude_ids`      | 数字或数字字符串数组   | 这些对话框控件 ID 上不要译。                                                         |
+| `include_ids`      | 数字或数字字符串数组   | 只在这些控件 ID 上译。                                                            |
+| `exclude_menu_ids` | 数字或数字字符串数组   | 这些菜单项 ID 上不要译。                                                           |
+| `positions`        | 对象数组         | `{ "x", "y", "w", "h" }`，与捕鱼注释里的 `Pos` 对应。见上方限制。                         |
+| *其它键*              | 非空字符串        | 当作类名映射，例如 `"SysHeader32": "标题"`、`"Button": "播放"`。                        |
+
 
 类名、ID 可从开发者模式的 `harvest.txt` 抄：
 
@@ -160,6 +166,8 @@ Play
 - `ID` → `when` 的 `id` / `ids`，或 `exclude_ids` / `include_ids`
 - `MenuID` → `when` 的 `menu_id` / `menu_ids`，或 `exclude_menu_ids`
 - `Pos` → `when` 的 `x,y,w,h` / `pos`（顶层 `positions` 仅作参考）
+
+
 
 #### 示例
 
