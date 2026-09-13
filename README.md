@@ -1,139 +1,143 @@
-# 动态多语引擎（foo_localize）
+<p align="left"><b>English</b> · <a href="README_zh.md">中文</a></p>
 
-foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
+# Dynamic Multilingual Engine (foo_localize)
 
-当前组件版本：`1.5.1`。English: [README_en.md](README_en.md)。
+A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
+Component version: `1.5.1`.
 
-## 更新
+This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
-### 1.5.1（2026-09-13）
-
-- Windows：JSplitter / Spider Monkey Panel 可正常创建 `FooLocalize.Engine`（不再因缺少类型信息失败）
-- Windows：JS 示例同时支持 JScript Panel 3 与 JSplitter；请用方法调用，例如 `engine.IsEnabled()`、`engine.Translate("Play")`
-- Windows：修复 JS 面板声明范围后，其它已本地化对话框（如 JSplitter 配置）单选框文字重影
-
-### 1.5.0（2026-09-13）
-
-- 语言包支持更精确的匹配：可以附件匹配条件，同一原文在不同场景关联不同译文
-- Windows：可翻译 WebView2 页面文字（精确匹配，默认关），含 placeholder / title / alt 与按钮 value
-- 升级后把内置语言包的新词条合并进已有 `foo-lang` 文件，不覆盖用户改过的译文
+## Updates
 
 
 
-### 1.4.1（2026-09-06）
+### 1.5.1 (2026-09-13)
 
-- 语言包管理窗口：右键可分别复制原文、译文到剪贴板
-- 简中词典补充约 99 条（列头、Klyrics、可视化、Cover Art Archive 等），并同步到繁/日/俄/西/德/法
+- Windows: JSplitter / Spider Monkey Panel can create `FooLocalize.Engine` (type information is provided; `GetTypeInfo` no longer fails).
+- Windows: The JS sample works on both JScript Panel 3 and JSplitter. Call COM members as methods, e.g. `engine.IsEnabled()`, `engine.Translate("Play")`.
+- Windows: A JS panel’s `SetPanelType` no longer leaks onto other windows, which caused ghosted radio-button labels on already-localized dialogs such as JSplitter Configuration.
 
+### 1.5.0 (2026-09-13)
 
-
-### 1.4.0（2026-09-06）
-
-- 在线翻译：可以在语言包管理窗口，使用在线翻译引擎，自动翻译原文
-- Windows / macOS：首选项可选在线翻译引擎（Google / 百度）并填写 AppID、密钥
-- macOS：语言包管理窗口与 Windows 对齐（预览、合并、改译文、在线翻译）
-
-
-
-### 1.3.0（2026-09-05）
-
-- 独立语言包管理窗口：选包预览、合并到目标语言、列表内直接改译文
-- Windows：新增「翻译 DUI 主菜单」开关（默认开，须同时开「翻译菜单」）；绘制按顶栏词与 BeginPaint 窗口区分，减少首选项叠字
-- Windows：翻译播放列表只作用于主窗口，避免 YouTube「页面中搜寻」等插件对话框重影
-- 简中词典补：Playing / Artist/album / Title / track artist / Track no
-- 语言包管理、DUI 开关与内容轨范围仅 Windows；macOS 行为与 1.2.2 相同
+- Language packs now support more precise matching: matching conditions can be attached, allowing the same source text to be linked to different translations depending on the context.
+- Windows: Supports translating text within WebView2 pages (exact match; disabled by default), including `placeholder`, `title`, `alt`, and button `value` attributes.
+- Upon upgrading, new entries from the built-in language packs are merged into existing `foo-lang` files without overwriting user-modified translations.
 
 
 
-### 1.2.2（2026-09-04）
+### 1.4.1 (2026-09-06)
 
-- Windows x64：修复 1.2.1 误把几乎所有界面文本当成无效指针，导致运行时字符串和 Default UI 主菜单不翻译
-
-
-
-### 1.2.1（2026-09-04）
-
-- Windows：修复其它插件弹出系统文件对话框时崩溃（`SetWindowTextW` 收到 `(LPWSTR)-1` 哨兵）
+- Language-pack window: right-click to copy the source or the translation separately
+- About 99 new Simplified Chinese entries (column headers, Klyrics, visualizations, Cover Art Archive, and more), synced to Traditional Chinese / Japanese / Russian / Spanish / German / French
 
 
 
-### 1.2.0（2026-09-04）
+### 1.4.0 (2026-09-06)
 
-- Windows：可开关「启用静态资源动态翻译」，字符串表与对话框模板按词典替换
-- Windows：JScript Panel / Spider Monkey Panel 可用 `new ActiveXObject("FooLocalize.Engine")` 翻译自绘文本
-- Windows：Default UI 顶栏启动即为译文，窗口不再为此抖动
-- 静态资源与 COM 仅 Windows；macOS 行为与 1.1.0 相同
-
-
-
-### 1.1.0（2026-09-03）
-
-- 可分别开关：翻译菜单、翻译对话框、翻译播放列表和媒体库
-- 播放列表 / 媒体库列头可译；查词去掉零宽空格等格式符，并识别 `%year%` / `%length%`
-- Windows：主菜单按译文量宽；对话框不再英文叠中文；SysLink 链接文字可译
-- macOS：语言列表挂在 `查看 → 动态多语引擎` 下，与 Windows 一致
+- Online translation: in the language-pack window, use an online engine to translate source strings automatically
+- Windows / macOS: choose an online translation engine (Google / Baidu) and enter AppID / secret in Preferences
+- macOS: language-pack window now matches Windows (preview, merge, edit, online translate)
 
 
 
-### 1.0.0（2026-09-02）
+### 1.3.0 (2026-09-05)
 
-- 首发：Windows 32 / 64 位与 macOS
-- 主菜单、右键菜单、首选项、对话框、窗口标题可按语言包替换
-- `查看 → 动态多语引擎 → 语言` 热切换；开发者模式把未译词条写入 `harvest.txt`
-- 内置简中、繁中、日、俄、西、德、法及英文模板；首次启动写入 `foo-lang`（不覆盖已有文件）
+- Standalone language-pack window: preview a pack, merge into a target language, and edit translations in the list
+- Windows: new **Translate DUI main menu** switch (on by default; also requires **Translate menus**); paint uses bar titles and the BeginPaint window so Preferences no longer stacks English under Chinese
+- Windows: playlist translation applies only to the main window, so plugin dialogs such as YouTube **Find in page** no longer ghost
+- Simplified Chinese pack: Playing / Artist/album / Title / track artist / Track no
+- Pack manager, DUI switch, and content-scope rules are Windows-only; macOS matches 1.2.2
 
 
 
-## 截图
+### 1.2.2 (2026-09-04)
+
+- Windows x64: fix 1.2.1 rejecting nearly all UI text pointers, which left runtime strings and the Default UI menu bar untranslated
+
+
+
+### 1.2.1 (2026-09-04)
+
+- Windows: fix a crash when other components open the system file dialog (`SetWindowTextW` received `(LPWSTR)-1`)
+
+
+
+### 1.2.0 (2026-09-04)
+
+- Windows: optional static-resource translation (string tables and dialog templates)
+- Windows: JScript Panel / Spider Monkey Panel can call `new ActiveXObject("FooLocalize.Engine")` for owner-drawn text
+- Windows: Default UI menu bar is translated on startup, without a window jump
+- Static resources and COM are Windows-only; macOS matches 1.1.0
+
+
+
+### 1.1.0 (2026-09-03)
+
+- Separate toggles for menus, dialogs, and playlist / library text
+- Playlist and library column headers translate; lookups strip zero-width format characters and accept `%year%` / `%length%` wrappers
+- Windows: menu items measure translated width; dialogs no longer paint English under Chinese; SysLink captions translate
+- macOS: the Language list lives under **View → Dynamic Multilingual Engine**, matching Windows
+
+
+
+### 1.0.0 (2026-09-02)
+
+- First release: Windows 32 / 64-bit and macOS
+- Main menus, context menus, Preferences, dialogs, and window titles follow the language pack
+- **View → Dynamic Multilingual Engine → Language** switches packs live; Developer Mode writes missing strings to `harvest.txt`
+- Built-in Simplified / Traditional Chinese, Japanese, Russian, Spanish, German, French, and an English template; first launch writes them to `foo-lang` (existing files are never overwritten)
+
+
+
+## Screenshots
 
 
 
 ### Windows
 
-![组件列表](screenshot/win/install-zh.png)
+![Components](screenshot/win/install.png)
 
-![查看菜单](screenshot/win/menu-item-zh.png)
+![View menu](screenshot/win/menu-item.png)
 
-![首选项](screenshot/win/setting-zh.png)
+![Preferences](screenshot/win/setting.png)
 
-![语言包管理](screenshot/win/manage-zh.png)
+![Language pack manager](screenshot/win/manage.png)
 
 ### macOS
 
-![组件列表](screenshot/macOS/install-zh.png)
+![Components](screenshot/macOS/install.png)
 
-![查看菜单](screenshot/macOS/view-item-zh.png)
+![View menu](screenshot/macOS/view-item.png)
 
-![首选项](screenshot/macOS/setting-zh.png)
+![Preferences](screenshot/macOS/setting.png)
 
-![语言包管理](screenshot/macOS/manage-zh.png)
+![Language pack manager](screenshot/macOS/manage.png)
 
-## 支持的播放器
-
-
-| 项目  | 要求                                     |
-| --- | -------------------------------------- |
-| 系统  | Windows 10 / 11；macOS 11+              |
-| 播放器 | **foobar2000 2.0 及以上**（32 位与 64 位均可）   |
-| 不支持 | foobar2000 1.x；Windows 组件不能装到 Mac，反之亦然 |
+## Supported players
 
 
-32 位与 64 位是两份 DLL，不能混用。
+| Item          | Requirement                                                               |
+| ------------- | ------------------------------------------------------------------------- |
+| OS            | Windows 10 / 11; macOS 11+                                                |
+| Player        | **foobar2000 2.0+** (32-bit or 64-bit)                                    |
+| Not supported | foobar2000 1.x; Windows components cannot be loaded on Mac and vice versa |
 
 
-| 播放器                     | 组件文件                     | 安装目录                                                        |
-| ----------------------- | ------------------------ | ----------------------------------------------------------- |
-| foobar2000 2.x **32 位** | `foo_localize.dll`       | `%APPDATA%\foobar2000-v2\user-components\foo_localize\`     |
-| foobar2000 2.x **64 位** | `foo_localize.dll`       | `%APPDATA%\foobar2000-v2\user-components-x64\foo_localize\` |
-| foobar2000 **Mac**      | `foo_localize.component` | `~/Library/foobar2000-v2/user-components/`                  |
+32-bit and 64-bit are two different DLLs. Do not mix them.
 
 
-语言包在用户配置目录，不进官方程序目录：
+| Player                    | Component file           | Install folder                                              |
+| ------------------------- | ------------------------ | ----------------------------------------------------------- |
+| foobar2000 2.x **32-bit** | `foo_localize.dll`       | `%APPDATA%\foobar2000-v2\user-components\foo_localize\`     |
+| foobar2000 2.x **64-bit** | `foo_localize.dll`       | `%APPDATA%\foobar2000-v2\user-components-x64\foo_localize\` |
+| foobar2000 **Mac**        | `foo_localize.component` | `~/Library/foobar2000-v2/user-components/`                  |
 
 
-| 系统      | 语言包目录                               |
+Language packs stay in the user profile, not the program folder:
+
+
+| OS      | Language-pack folder                |
 | ------- | ----------------------------------- |
 | Windows | `%APPDATA%\foobar2000-v2\foo-lang\` |
 | macOS   | `~/Library/foobar2000-v2/foo-lang\` |
@@ -141,58 +145,58 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 
 
-## 安装
+## Install
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.5.1.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
-2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
-3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.5.1.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+2. In foobar: **File → Preferences → Components → Install**, then pick that file.
+3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 
-首次启动会把内置语言包写到 `foo-lang`（目录里还没有同名文件时才写）。**已有的 JSON 不会被覆盖**，升级组件不会丢掉你改过的译文。
+On first launch the built-in packs are written to `foo-lang` **only when that file is missing**. Existing JSON is never overwritten, so upgrading the component does not discard your edits.
 
-64 位 Windows 常见路径：
+A typical 64-bit Windows path:
 
 ```
-C:\Users\<用户名>\AppData\Roaming\foobar2000-v2\user-components-x64\foo_localize\foo_localize.dll
-C:\Users\<用户名>\AppData\Roaming\foobar2000-v2\foo-lang\
+C:\Users\<name>\AppData\Roaming\foobar2000-v2\user-components-x64\foo_localize\foo_localize.dll
+C:\Users\<name>\AppData\Roaming\foobar2000-v2\foo-lang\
 ```
 
-foobar 正在运行时无法覆盖 DLL，请先退出再拷。
+foobar cannot overwrite the DLL while it is running. Quit first.
 
-## 使用
+## Usage
 
-- **总开关**：初次安装后默认关闭。先 `查看 → 动态多语引擎 → 启用多语引擎`，或在首选项里勾选启用。
-- **范围**：可分别开关「翻译菜单」「翻译 DUI 主菜单」「翻译对话框」「翻译播放列表和媒体库」。Windows 另有「启用静态资源动态翻译」（受总开关约束，默认关）。
-- **切语言**：`查看 → 动态多语引擎 → 语言`，或 **文件 → 首选项 → 显示 → 动态多语引擎** 里选「翻译目标语言」。点「语言包管理」可编辑词条、合并捕鱼、在线翻译。
-- **开发者模式**：同在 `查看 → 动态多语引擎`。
-- 开发者模式会把未翻译的界面英文追加到 `foo-lang/harvest.txt`。把新键合并进对应 JSON 后，再选一次语言或重启即可。
+- **Master switch**: Off after a fresh install. Enable it under **View → Dynamic Multilingual Engine → Enable**, or in Preferences.
+- **Scopes**: separately enable menus, **Translate DUI main menu**, dialogs, and playlist / library text. Windows also has **Enable static resource translation** (gated by the master switch, off by default).
+- **Switch language**: **View → Dynamic Multilingual Engine → Language**, or **File → Preferences → Display → Dynamic Multilingual Engine** and pick **Target language**. **Manage packs** edits entries, merges harvest files, and can translate online.
+- **Developer Mode**: same **View → Dynamic Multilingual Engine** submenu.
+- Developer Mode appends unmatched UI English to `foo-lang/harvest.txt`. Merge new keys into the JSON, then pick the language again or restart.
 
-`en-US-template.json` 的译文全是空字符串，选它等于显示英文原文，适合当自制语言包的底板。
+`en-US-template.json` has empty values, so selecting it shows the original English. Use it as a blank for a new pack.
 
-换语言后菜单和对话框会立刻重刷；个别自绘控件可能要再打开一次窗口才重画。
+Menus and dialogs refresh immediately after a switch. A few owner-drawn controls may need the window reopened.
 
-## 语言包规范
+## Language-pack rules
 
-界面英文是键，译文在 JSON。空值 = 画面显示原文。不要用空字符串表示「隐藏」。
-
-
-| 规则      | 说明                                                                                           |
-| ------- | -------------------------------------------------------------------------------------------- |
-| 精确匹配    | 按界面原文查找；大小写可折叠，行首 `•` / 首尾空白与零宽格式符会去掉后再查                                                     |
-| `@name` | 只出现在语言菜单，不参与替换                                                                               |
-| 菜单加速键   | 原文里 `\t` 后面是快捷键，只译前面的可见文字                                                                    |
-| 空译文     | 不翻译，保留英文                                                                                     |
-| 不译      | 歌名、文件名、播放列表名、路径、网址、`foobar2000`、`foo_*`、`ReFacets`、`UPnP`、`FFmpeg`、字体名、Title Formatting、配置脚本 |
-| 首次写入    | 内置包只在 `foo-lang` 里**没有**该文件时写出                                                               |
-| 升级      | 不会覆盖已有 JSON；要恢复某份种子，先备份再删该文件后重启                                                              |
-| 补词      | 开发者模式 → `harvest.txt` → 合并进 JSON → 再选一次语言                                                    |
+The English UI string is the key; the translation is the JSON value. An empty value leaves the original text on screen. Do not use an empty string to mean “hide”.
 
 
-本仓库 `[dict/](dict/)` 与组件内置种子一致，可对照或另存新语言。编写说明：[语言包编写指南](docs/lang-pack.md)。
+| Rule              | Meaning                                                                                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Exact match       | Look up the on-screen source text; ASCII case can fold, and a leading `•` / surrounding spaces / zero-width format characters are stripped first         |
+| `@name`           | Language-menu label only; not substituted into the UI                                                                                                    |
+| Menu accelerators | Text after `\t` is the shortcut; translate only the visible part before `\t`                                                                             |
+| Empty value       | Do not translate                                                                                                                                         |
+| Do not translate  | Track titles, file names, playlist names, paths, URLs, `foobar2000`, `foo_*`, `ReFacets`, `UPnP`, `FFmpeg`, font names, Title Formatting, config scripts |
+| First-run seed    | A built-in pack is written only if that file is **absent** from `foo-lang`                                                                               |
+| Upgrades          | Existing JSON is kept; to restore a shipped pack, back it up, delete that file, and restart                                                              |
+| Harvest           | Developer Mode → `harvest.txt` → merge into JSON → pick the language again                                                                               |
 
-随附文件：
+
+`[dict/](dict/)` in this repo matches the built-in seeds. Writing guide: [Language pack guide](docs/lang-pack.en.md).
+
+Shipped files:
 
 
-| 文件                    | 显示名                |
+| File                  | Display name       |
 | --------------------- | ------------------ |
 | `zh-CN.json`          | 简体中文               |
 | `zh-TW.json`          | 繁體中文               |
@@ -204,18 +208,18 @@ foobar 正在运行时无法覆盖 DLL，请先退出再拷。
 | `en-US-template.json` | English (template) |
 
 
-Windows **Columns UI 状态栏**音量格目前画的是 `-3.00 dB`，没有可替换的 `volume` 单词，这条暂时搁置。
+The Windows **Columns UI** status-bar volume cell currently draws `-3.00 dB`, not the word `volume`. That path is deferred.
 
-## 首选项
+## Preferences
 
-**文件 → 首选项 → 显示 → 动态多语引擎**
+**File → Preferences → Display → Dynamic Multilingual Engine** (Chinese UI: **动态多语引擎**)
 
-可开关引擎、翻译范围（含 DUI 主菜单）、打开开发者模式、选择「本插件语言」与「翻译目标语言」，以及在线翻译引擎 / AppID / 密钥。点「语言包管理」可在独立窗口编辑词条。查看菜单分组名跟本插件语言走：中文 **动态多语引擎**，英文 **Dynamic Multilingual Engine**。
+Enable the engine, the translation scopes (including the DUI main menu), Developer Mode, **Plugin language**, **Target language**, and the online engine / AppID / secret. **Manage packs** opens a window to edit entries. The View menu group follows the plugin language: **动态多语引擎** in Chinese, **Dynamic Multilingual Engine** in English.
 
-## 给其他组件的 API
+## API for other components
 
-C++ 组件：头文件和可编译示例在 `[sdk/](sdk/README.md)`。把 `[sdk/foo_localize_api.h](sdk/foo_localize_api.h)` 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：`[sdk/sample/](sdk/sample/README.md)`。
+C++ components: the header and a buildable sample live in [`sdk/`](sdk/README.md). Copy [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: [`sdk/sample/`](sdk/sample/README.md).
 
-JScript Panel 3（仅 Windows）：把 `[sdk/foo_localize.js](sdk/foo_localize.js)` 贴进面板。用 `new ActiveXObject("FooLocalize.Engine")` 和 `gr.WriteText`（与快乐歌词相同）。未安装本组件时 `try/catch` 回退英文。
+JScript Panel 3 (Windows only): paste [`sdk/foo_localize.js`](sdk/foo_localize.js) into a panel. Use `new ActiveXObject("FooLocalize.Engine")` and `gr.WriteText` (same as Klyrics). If the component is not installed, catch the error and keep English.
 
-说明见 [组件 API](docs/api.md)。English: [docs/api.en.md](docs/api.en.md)。
+See [Component API](docs/api.en.md). 中文：[docs/api.md](docs/api.md).
