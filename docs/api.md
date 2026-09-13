@@ -127,11 +127,20 @@ GUID：
 
 ## JS 面板（Windows）
 
-JScript Panel / Spider Monkey Panel 的 `gr.DrawString` 不走系统钩子，也拿不到上面的 C++ 服务。用 COM：`FooLocalize.Engine`。macOS 没有这条接口。
+JScript Panel / Spider Monkey Panel 自绘文字不走 C++ 服务，用 COM：`FooLocalize.Engine`。macOS 没有这条接口。
 
 每个 `ActiveXObject` 实例自带一份面板状态（`Skip`、`SetPanelType`、`SetContextType`）。建议全局只创建一次，不要在 `on_paint` 里反复 `new`。
 
-总开关关闭、词典未命中、或该实例正处于 `Skip()` 时，`Translate` 返回原文。不要把路径、曲目名传进去。`gr.DrawString` 必须自己包 `Translate`；`gr.GdiDrawText` 会走 `DrawTextW` 挂钩，同时受 `Skip` / `SetPanelType` / `SetContextType` 和词典规则约束。
+总开关关闭、词典未命中、或该实例正处于 `Skip()` 时，`Translate` 返回原文。不要把路径、曲目名传进去。
+
+画字语法按面板组件区分：
+
+| 组件 | 画字 | 字体 | 是否走 GDI 挂钩 |
+| --- | --- | --- | --- |
+| **JScript Panel 3** | `gr.WriteText(text, font, color, x, y, w, h)` | `JSON.stringify({Name:"Segoe UI", Size:16})` | 否，必须自己包 `Translate` |
+| Spider Monkey Panel / JSP 2 | `gr.GdiDrawText` / `gr.DrawString` | `gdi.Font(...)` | 仅 `GdiDrawText` 会走 `DrawTextW` |
+
+JScript Panel 3.4 没有 `GdiDrawText` / `DrawString` / `gdi.Font`。写法与快乐歌词面板相同。
 
 `SetPanelType` / `SetContextType` 的 `type` 大小写不敏感：
 
@@ -153,12 +162,18 @@ try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
+function RGB(r, g, b) {
+    return 0xff000000 | (r << 16) | (g << 8) | b;
+}
+
+var font = JSON.stringify({Name: "Segoe UI", Size: 16});
+
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 ```
 
-未安装组件或 COM 未注册时，`new ActiveXObject` 会抛错，`engine` 保持 `null`。之后每条方法都先判断 `engine`。
+未安装组件或 COM 未注册时，`new ActiveXObject` 会抛错，`engine` 保持 `null`。之后每条方法都先判断 `engine`。JSP3 画字用 `gr.WriteText`，字体是 JSON 字符串，颜色用 `RGB()`，与快乐歌词一致。
 
 ---
 
@@ -179,7 +194,7 @@ var label = engine.Translate("Play");
 var byHwnd = engine.Translate("Play", window.ID);
 var header = engine.Translate("Title", "SysHeader32");
 
-gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
+gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 ```
 
 ---
@@ -255,7 +270,7 @@ if (engine && engine.SetLanguage("zh-CN")) {
 | --- | --- |
 | **参数** | `type`（String，必填）：`menu` / `dialog` / `content` / `playlist` / `library`。 |
 | **返回值** | `Boolean`。识别成功为 `true`；未知字符串为 `false`，状态不变。 |
-| **说明** | 只影响这个 `engine` 实例随后的 `GdiDrawText` 挂钩。建议每次 `on_paint` 开头再调一次，以便绑定当前 HWND。 |
+| **说明** | 只影响这个 `engine` 实例随后的 GDI 挂钩（SMP 的 `GdiDrawText`）。JSP3 的 `WriteText` 不挂钩，请用 `Translate`。建议每次 `on_paint` 开头再调一次，以便绑定当前 HWND。 |
 
 ```javascript
 function on_paint(gr) {
@@ -263,7 +278,7 @@ function on_paint(gr) {
         return;
     }
     engine.SetPanelType("playlist");
-    gr.GdiDrawText("Play", font, color, 0, 0, w, h, 0);
+    gr.WriteText(engine.Translate("Play"), font, color, 0, 0, w, h);
 }
 ```
 
@@ -277,23 +292,23 @@ function on_paint(gr) {
 | --- | --- | --- |
 | **参数** | `type`（String，必填）：取值同 `SetPanelType`。 | `type`（String，可选）。省略则无条件清除。传入时：与当前上下文相同才清除；不匹配则不动。 |
 | **返回值** | `Boolean`。识别成功为 `true`；未知 `type` 为 `false`。 | `Boolean`。已清除为 `true`；传入的 `type` 与当前上下文不匹配为 `false`。 |
-| **说明** | 之后的 `GdiDrawText` 按该范围判断是否翻译。 | 清除后回到 `SetPanelType` 的默认范围。 |
+| **说明** | 之后的 GDI 挂钩按该范围判断是否翻译。JSP3 请继续用 `Translate`。 | 清除后回到 `SetPanelType` 的默认范围。 |
 
 ```javascript
 engine.SetPanelType("playlist");
 
 engine.SetContextType("menu");
-gr.GdiDrawText("Settings", font, color, 0, 0, w, rowH, 0);
+gr.WriteText(engine.Translate("Settings"), font, color, 0, 0, w, rowH);
 engine.ClearContextType("menu");
 
-gr.GdiDrawText("Play", font, color, 0, rowH, w, rowH, 0);
+gr.WriteText(engine.Translate("Play"), font, color, 0, rowH, w, rowH);
 ```
 
 ---
 
 ### `Skip()` / `Continue()`
 
-跳过 / 恢复**本实例**的翻译。`Skip` 之后，本面板的 `Translate()` 和 `GdiDrawText` → `DrawTextW` 挂钩都不再替换字符串，直到 `Continue()`。
+跳过 / 恢复**本实例**的翻译。`Skip` 之后，本面板的 `Translate()` 以及 SMP 的 `GdiDrawText` → `DrawTextW` 挂钩都不再替换字符串，直到 `Continue()`。JSP3 的 `WriteText` 不挂钩，不译的字符串不要包 `Translate`。
 
 | | |
 | --- | --- |
@@ -303,7 +318,7 @@ gr.GdiDrawText("Play", font, color, 0, rowH, w, rowH, 0);
 
 ```javascript
 engine.Skip();
-gr.GdiDrawText(playlistTitle, font, color, 0, 0, w, rowH, 0);
+gr.WriteText(playlistTitle, font, color, 0, 0, w, rowH);
 engine.Continue();
 ```
 
@@ -369,37 +384,40 @@ engine.ModifyTranslation("Play", "播放", "zh-CN");
 
 ---
 
-### 完整 demo（`on_paint`）
+### 完整 demo（JScript Panel 3，与快乐歌词相同画法）
 
 ```javascript
+function RGB(r, g, b) {
+    return 0xff000000 | (r << 16) | (g << 8) | b;
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
-var font = gdi.Font("Segoe UI", 12, 0);
-var color = 0xffffffff;
-var playlist = "playlist title";
-var w = 200;
-var rowH = 24;
+var g_font = JSON.stringify({Name: "Segoe UI", Size: 16});
+var g_font_hi = JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700});
+
+function _(text) {
+    return engine ? engine.Translate(text) : text;
+}
 
 function on_paint(gr) {
+    var w = window.Width;
+    var h = window.Height;
+    gr.Clear(RGB(20, 20, 26));
+
     if (!engine || !engine.IsEnabled) {
-        gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
+        gr.WriteText("Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }
 
     engine.SetPanelType("playlist");
 
-    engine.Skip();
-    gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
-    engine.Continue();
-
-    engine.SetContextType("menu");
-    gr.GdiDrawText("Settings", font, color, 0, rowH, w, rowH, 0);
-    engine.ClearContextType("menu");
-
-    gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, rowH * 2, w, rowH);
+    gr.WriteText("playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    gr.WriteText(_("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
+    gr.WriteText(_("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
 }
 
 function on_mouse_lbtn_up(x, y) {

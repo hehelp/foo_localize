@@ -220,7 +220,7 @@ Play
 - 对不上任何条款时用 `__default__`「查看」。
 - JS / C++ 只传原文、不带位置时，只用「查看」。
 
-JS 面板用 `Translate("Play", window.ID)` 或 `Translate("Title", "SysHeader32")` 才能走到这些筛选项。`gr.GdiDrawText` 走系统挂钩，会自动带上当前 HWND。
+JS 面板用 `Translate("Play", window.ID)` 或 `Translate("Title", "SysHeader32")` 才能走到这些筛选项。JScript Panel 3 请用 `gr.WriteText` 并自己包 `Translate`；SMP 的 `gr.GdiDrawText` 走系统挂钩，会自动带上当前 HWND。
 
 ## 补词
 
