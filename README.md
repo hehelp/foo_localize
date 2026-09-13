@@ -2,17 +2,25 @@
 
 foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.5.0`。English: [README_en.md](README_en.md)。
+当前组件版本：`1.5.1`。English: [README_en.md](README_en.md)。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.5.1（2026-09-13）
+
+- Windows：JSplitter / Spider Monkey Panel 可正常创建 `FooLocalize.Engine`（不再因缺少类型信息失败）
+- Windows：JS 示例同时支持 JScript Panel 3 与 JSplitter；请用方法调用，例如 `engine.IsEnabled()`、`engine.Translate("Play")`
+- Windows：修复 JS 面板声明范围后，其它已本地化对话框（如 JSplitter 配置）单选框文字重影
 
 ### 1.5.0（2026-09-13）
 
 - 语言包支持更精确的匹配：可以附件匹配条件，同一原文在不同场景关联不同译文
 - Windows：可翻译 WebView2 页面文字（精确匹配，默认关），含 placeholder / title / alt 与按钮 value
 - 升级后把内置语言包的新词条合并进已有 `foo-lang` 文件，不覆盖用户改过的译文
+
+
 
 ### 1.4.1（2026-09-06）
 
@@ -135,7 +143,7 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.5.0.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.5.1.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 
@@ -206,8 +214,8 @@ Windows **Columns UI 状态栏**音量格目前画的是 `-3.00 dB`，没有可�
 
 ## 给其他组件的 API
 
-C++ 组件：头文件和可编译示例在 [`sdk/`](sdk/README.md)。把 [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：[`sdk/sample/`](sdk/sample/README.md)。
+C++ 组件：头文件和可编译示例在 `[sdk/](sdk/README.md)`。把 `[sdk/foo_localize_api.h](sdk/foo_localize_api.h)` 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：`[sdk/sample/](sdk/sample/README.md)`。
 
-JScript Panel 3（仅 Windows）：把 [`sdk/foo_localize.js`](sdk/foo_localize.js) 贴进面板。用 `new ActiveXObject("FooLocalize.Engine")` 和 `gr.WriteText`（与快乐歌词相同）。未安装本组件时 `try/catch` 回退英文。
+JScript Panel 3（仅 Windows）：把 `[sdk/foo_localize.js](sdk/foo_localize.js)` 贴进面板。用 `new ActiveXObject("FooLocalize.Engine")` 和 `gr.WriteText`（与快乐歌词相同）。未安装本组件时 `try/catch` 回退英文。
 
 说明见 [组件 API](docs/api.md)。English: [docs/api.en.md](docs/api.en.md)。

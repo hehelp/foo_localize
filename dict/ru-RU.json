@@ -2079,5 +2079,282 @@
   "Simple Media Library search": "Простой поиск по медиатеке",
   "Spectrogram visualization.": "Визуализация спектрограммы.",
   "Spectrum visualization.": "Визуализация спектра.",
-  "VU meter visualization.": "Визуализация VU-метра."
+  "VU meter visualization.": "Визуализация VU-метра.",
+  "Live layout editing": "Правка макета в реальном времени",
+  " Add Files": "Добавить файлы",
+  " Auto-hide Sidebar": "Автоскрытие боковой панели",
+  " Blend Color Overlay": "Наложение цвета",
+  " Blurred Cover Background": "Размытый фон обложки",
+  " Classic Three Buttons": "Классические три кнопки",
+  " Close Context Menu": "Закрыть контекстное меню",
+  " Controlbar at Bottom": "Панель управления внизу",
+  " Detailed settings (Playback/Interface/Spectrum)": "Подробные настройки (воспроизведение/интерфейс/спектр)",
+  " Global search": "Глобальный поиск",
+  " Grain Texture": "Зернистая текстура",
+  " LED Dot Matrix Style": "Стиль светодиодной матрицы",
+  " Library browsing (Folder/Artist/Genre)": "Обзор медиатеки (папка/исполнитель/жанр)",
+  " Mute Toggle": "Переключение звука",
+  " Play All": "Воспроизвести всё",
+  " Play Queue": "Очередь воспроизведения",
+  " Play/Pause": "Воспроизведение/пауза",
+  " Playlist (virtual scrolling + album grouping + grid view)": "Плейлист (виртуальная прокрутка + группировка альбомов + сетка)",
+  " Previous / Next": "Назад / далее",
+  " Queue management": "Управление очередью",
+  " Show Software Name": "Показывать имя программы",
+  " Show Spectrum in Controlbar": "Показывать спектр на панели управления",
+  " Show Theme Name": "Показывать имя темы",
+  " Use Native Main Menu": "Использовать системное главное меню",
+  " Volume Up/Down": "Громче/тише",
+  "(Unknown Album)": "(Неизвестный альбом)",
+  "+ Add Folder": "+ Добавить папку",
+  "☐ Select All": "☐ Выбрать всё",
+  "♪ Loading lyrics…": "♪ Загрузка текста…",
+  "♪ No lyrics": "♪ Нет текста",
+  "0 Albums": "0 альбомов",
+  "0 albums": "0 альбомов",
+  "0 Tracks": "0 треков",
+  "3 New Hit Songs from Bright Eyes": "",
+  "Acknowledgements": "Благодарности",
+  "Alegria": "",
+  "Antti Martikainen": "",
+  "Automatically fetched from Last.fm when track changes": "Автоматически загружается с Last.fm при смене трека",
+  "Background Effects": "Эффекты фона",
+  "Bright Eyes": "",
+  "Cirque du Soleil": "",
+  "Clear Queue": "Очистить очередь",
+  "Controlbar": "Панель управления",
+  "Cover Color": "Цвет обложки",
+  "Custom Color": "Свой цвет",
+  "Dark Default": "Тёмная (по умолчанию)",
+  "Drunk Kid Catholic": "",
+  "Dual Bar Settings": "Настройки двойной панели",
+  "Emerald Green": "Изумрудный",
+  "Features": "Возможности",
+  "Fetch failed": "Не удалось загрузить",
+  "Fetching artist bio…": "Загрузка биографии исполнителя…",
+  "foobar2000 WebView2 Modern Theme": "Современная тема foobar2000 WebView2",
+  "Icare": "",
+  "Intensity: ": "Интенсивность: ",
+  "Interface Brightness": "Яркость интерфейса",
+  "Light Day": "Светлый день",
+  "Loading directories...": "Загрузка каталогов...",
+  "Media library has no root directories": "В медиатеке нет корневых папок",
+  "Melancholie und Sturmflut (Bonus Tracks Edition)": "",
+  "No artist bio available": "Нет биографии исполнителя",
+  "Playback Settings": "Настройки воспроизведения",
+  "Queue is empty": "Очередь пуста",
+  "Settings": "Настройки",
+  "Shortcuts": "Сочетания клавиш",
+  "Space": "",
+  "System Info": "Сведения о системе",
+  "Tech Stack": "Технологии",
+  "Thanks to @Asion for guidance and community: QQ Group 11675361": "Благодарность @Asion за помощь и сообщество: QQ-группа 11675361",
+  "Thanks to @TaoSha for the generous help!": "Спасибо @TaoSha за щедрую помощь!",
+  "Thanks to foo_ui_webview2 developer @Nereafantasia for their dedication and support!": "Спасибо разработчику foo_ui_webview2 @Nereafantasia за труд и поддержку!",
+  "The Last Chronicle": "",
+  "Theme loaded": "Тема загружена",
+  "Titlebar": "Заголовок окна",
+  "Warm Retro": "Тёплый ретро",
+  "Spectrum Bands:\n            ": "Полосы спектра:",
+  "Spectrum Color Source:\n            ": "Источник цвета спектра:",
+  "Spectrum Base Color:\n            ": "Базовый цвет спектра:",
+  "Spectrum Opacity:\n            ": "Непрозрачность спектра:",
+  "Text Brightness:\n            ": "Яркость текста:",
+  "Background Brightness:\n            ": "Яркость фона:",
+  "Zoom Scale:\n            ": "Масштаб:",
+  "Color Theme:\n            ": "Цветовая тема:",
+  "Blend Color:\n            ": "Цвет смешивания:",
+  "Blend Opacity:\n            ": "Непрозрачность смешивания:",
+  "Copy name": "Копировать имя",
+  "&Copy name": "Копировать имя(&C)",
+  "foobar2000 WebView2 Theme": "Тема foobar2000 WebView2",
+  " Foobar2000 Now Playing (Classic/Sidebar/Immersive/Lyrics/Rotating CD - 5 layouts)": "Foobar2000 Now Playing (классика/боковая панель/иммерсив/текст/вращающийся CD — 5 макетов)",
+  "Search library: tracks, artists, albums...": "Поиск в медиатеке: треки, исполнители, альбомы...",
+  "Maximize": "Развернуть",
+  "Cover": "Обложка",
+  "System Settings": "Системные настройки",
+  "Classic": "Классика",
+  "Sidebar": "Боковая панель",
+  "Immersive": "Иммерсивный",
+  "Lyrics": "Текст",
+  "Rotating CD": "Вращающийся CD",
+  "Left Position": "Слева",
+  "Right Position": "Справа",
+  "Show Info": "Показать сведения",
+  "Show Lyrics": "Показать текст",
+  "Cover/CD": "Обложка/CD",
+  "Loop Mode": "Режим повтора",
+  "Grid View": "Сетка",
+  "List View": "Список",
+  "Swap Left/Right": "Поменять лево/право",
+  "Swap Top/Bottom": "Поменять верх/низ",
+  "Sequential": "По порядку",
+  "<a>Get more components</a>n<a>Why are some components grayed out?</a>": {
+    "__default__": "<a>Другие компоненты</a>n<a>Почему некоторые компоненты серые?</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "<a>Syntax help</a>": {
+    "__default__": "<a>Справка по синтаксису</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Media library not enabled\nPlease configure media library in foobar2000": "Медиатека не включена\nНастройте медиатеку в foobar2000",
+  "FooLocalizeJsTest": "",
+  "&Reload": "Перезагрузить(&R)",
+  "&Edit panel script...": "Изменить скрипт панели(&E)...",
+  "&Panel properties...": "Свойства панели(&P)...",
+  "&Open component folder": "Открыть папку компонента(&O)",
+  "&Open documentation": "Открыть документацию(&O)",
+  "&Panel list": "Список панелей(&P)",
+  "Pseudotransparency": "Псевдопрозрачность",
+  "Caption": "Заголовок",
+  "Height": "Высота",
+  "Script": "Скрипт",
+  "Temporary file": "Временный файл",
+  "Temporary file *": "Временный файл *",
+  "Presets": "Предустановки",
+  "WSH Panel Mod": "",
+  "Add panel": "Добавить панель",
+  "Splitters": "Разделители",
+  "JSplitter": "",
+  "Reload": "Перезагрузить",
+  "Edit properties...": "Изменить свойства...",
+  "Clear properties": "Очистить свойства",
+  "JScript Panel 3": "",
+  "Turn the Dynamic Multi-Lang Engine on or off": "Включить или выключить движок мультиязычности",
+  "Requires Multi-Lang Engine; replaces text when string tables and dialog resources load (Windows only; independent of menu/dialog/content scopes)": "Нужен движок; заменяет текст при загрузке таблиц строк и диалогов (только Windows; независимо от областей меню/диалогов/содержимого)",
+  "Translate main and context menus (most stable)": "Переводить главное и контекстные меню (самый стабильный режим)",
+  "Translates the Default UI owner-drawn menu bar; turn off if preference controls that share menu strings ghost (Windows only)": "Переводит отрисованную панелью Default UI строку меню; выключите, если элементы настроек с теми же строками двоятся (только Windows)",
+  "Translate preferences, dialogs, and window text (may ghost)": "Переводить настройки, диалоги и текст окон (может двоиться)",
+  "Translate text on playlist, library, and similar panels": "Переводить текст на плейлисте, в медиатеке и похожих панелях",
+  "Collect untranslated English strings into harvest.txt": "Собирать непереведённые английские строки в harvest.txt",
+  "Open the language pack manager": "Открыть диспетчер языковых пакетов",
+  "&Samples": {
+    "__default__": "Примеры(&S)",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Script source": {
+    "__default__": "Источник скрипта",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Editor": {
+    "__default__": "Редактор",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "JSplitter Configuration": {
+    "__default__": "Настройка JSplitter",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel name:": {
+    "__default__": "Имя панели:",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "No edge": {
+    "__default__": "Без рамки",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sunken edge": {
+    "__default__": "Утопленная рамка",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Grey edge": {
+    "__default__": "Серая рамка",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Use pseudo-transparency": {
+    "__default__": "Использовать псевдопрозрачность",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sample": {
+    "__default__": "Пример",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "In-memory": {
+    "__default__": "В памяти",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package": {
+    "__default__": "Пакет",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package manager": {
+    "__default__": "Диспетчер пакетов",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Edit script...": {
+    "__default__": "Изменить скрипт...",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel list": {
+    "__default__": "Список панелей",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Foobar2000 Player": ""
 }

@@ -331,7 +331,7 @@
   "Fetch images online": "在線獲取圖片",
   "Online sources": "在線源",
   "Fanart key": "Fanart 密鑰",
-  "Embedded and folder art are tried first. Album cover wins if both display options are on. Online lookup follows the In use list; an empty list skips online search.": "先用文件內嵌或資料夾封面。兩邊都開時優先專輯封面。在線搜圖按使用中列表的順序進行，列表為空則不在線搜。",
+  "Embedded and folder art are tried first. Album cover wins if both display options are on. Online lookup follows the In use list; an empty list skips online search.": "優先使用內嵌和資料夾封面。兩項都開時以專輯封面為準。在線查找按「使用中」列表；列表為空則跳過在線搜索。",
   "Appearance theme": "外觀主題",
   "Apply selected": "應用所選",
   "Copy theme": "複製主題",
@@ -2079,5 +2079,282 @@
   "Simple Media Library search": "簡單媒體庫搜索",
   "Spectrogram visualization.": "光譜圖可視化。",
   "Spectrum visualization.": "光譜可視化。",
-  "VU meter visualization.": "VU儀表可視化。"
+  "VU meter visualization.": "VU儀表可視化。",
+  "Live layout editing": "實時布局編輯",
+  " Add Files": "新增檔案",
+  " Auto-hide Sidebar": "自動隱藏側邊欄",
+  " Blend Color Overlay": "混合顏色疊加",
+  " Blurred Cover Background": "封面背景模糊",
+  " Classic Three Buttons": "經典三按鈕",
+  " Close Context Menu": "關閉上下文菜單",
+  " Controlbar at Bottom": "底部的控制欄",
+  " Detailed settings (Playback/Interface/Spectrum)": "詳細設定（播放/界面/頻譜）",
+  " Global search": "全局搜索",
+  " Grain Texture": "紋理",
+  " LED Dot Matrix Style": "LED點陣樣式",
+  " Library browsing (Folder/Artist/Genre)": "庫瀏覽（資料夾/藝術家/流派）",
+  " Mute Toggle": "靜音切換",
+  " Play All": "全部播放",
+  " Play Queue": "播放隊列",
+  " Play/Pause": "播放/暫停",
+  " Playlist (virtual scrolling + album grouping + grid view)": "播放列表（虛擬滾動+專輯分組+網格視圖）",
+  " Previous / Next": "上一頁/下一頁",
+  " Queue management": "隊列管理",
+  " Show Software Name": "顯示軟體名稱",
+  " Show Spectrum in Controlbar": "在控制欄中顯示頻譜",
+  " Show Theme Name": "顯示主題名稱",
+  " Use Native Main Menu": "使用本機主菜單",
+  " Volume Up/Down": "調高/調低音量",
+  "(Unknown Album)": "（未知專輯）",
+  "+ Add Folder": "+新增資料夾",
+  "☐ Select All": "☐ 全選",
+  "♪ Loading lyrics…": "♪ 正在加載歌詞…",
+  "♪ No lyrics": "♪ 沒有歌詞",
+  "0 Albums": "0張專輯",
+  "0 albums": "0張專輯",
+  "0 Tracks": "0個曲目",
+  "3 New Hit Songs from Bright Eyes": "Bright Eyes的三首新熱門歌曲",
+  "Acknowledgements": "致謝",
+  "Alegria": "歡樂",
+  "Antti Martikainen": "安蒂·馬爾蒂凱寧",
+  "Automatically fetched from Last.fm when track changes": "曲目更改時自動從Last.fm獲取",
+  "Background Effects": "背景效果",
+  "Bright Eyes": "明亮的眼睛",
+  "Cirque du Soleil": "太陽劇團",
+  "Clear Queue": "清除隊列",
+  "Controlbar": "控制欄",
+  "Cover Color": "封面顏色",
+  "Custom Color": "自定義顏色",
+  "Dark Default": "暗預設值",
+  "Drunk Kid Catholic": "喝醉的天主教兒童",
+  "Dual Bar Settings": "雙欄設定",
+  "Emerald Green": "翡翠綠",
+  "Features": "特點",
+  "Fetch failed": "獲取失敗",
+  "Fetching artist bio…": "正在獲取藝術家簡介…",
+  "foobar2000 WebView2 Modern Theme": "foobar2000 WebView2現代主題",
+  "Icare": "伊卡洛斯",
+  "Intensity: ": "強度：",
+  "Interface Brightness": "界面亮度",
+  "Light Day": "亮白",
+  "Loading directories...": "正在加載目錄。..",
+  "Media library has no root directories": "媒體庫沒有根目錄",
+  "Melancholie und Sturmflut (Bonus Tracks Edition)": "憂鬱症和Sturmflut（額外曲目版）",
+  "No artist bio available": "沒有可用的藝術家簡介",
+  "Playback Settings": "播放設定",
+  "Queue is empty": "隊列為空",
+  "Settings": "設定",
+  "Shortcuts": "快捷鍵",
+  "Space": "",
+  "System Info": "系統資訊",
+  "Tech Stack": "技術棧",
+  "Thanks to @Asion for guidance and community: QQ Group 11675361": "感謝@Asion的指導和社區：QQ群11675361",
+  "Thanks to @TaoSha for the generous help!": "感謝@TaoSha的慷慨幫助！",
+  "Thanks to foo_ui_webview2 developer @Nereafantasia for their dedication and support!": "感謝foo_ui_webview2開發者@Nereafanda的奉獻和支持！",
+  "The Last Chronicle": "最後的編年史",
+  "Theme loaded": "主題已加載",
+  "Titlebar": "標題欄",
+  "Warm Retro": "溫暖復古",
+  "Spectrum Bands:\n            ": "頻譜帶：",
+  "Spectrum Color Source:\n            ": "頻譜顏色源：",
+  "Spectrum Base Color:\n            ": "頻譜基礎顏色：",
+  "Spectrum Opacity:\n            ": "頻譜不透明度：",
+  "Text Brightness:\n            ": "文本亮度：",
+  "Background Brightness:\n            ": "背景亮度：",
+  "Zoom Scale:\n            ": "縮放比例：",
+  "Color Theme:\n            ": "顏色主題：",
+  "Blend Color:\n            ": "混合顏色：",
+  "Blend Opacity:\n            ": "混合不透明度：",
+  "Copy name": "複製名稱",
+  "&Copy name": "複製名稱",
+  "foobar2000 WebView2 Theme": "foobar2000 WebView2主題",
+  " Foobar2000 Now Playing (Classic/Sidebar/Immersive/Lyrics/Rotating CD - 5 layouts)": "Foobar2000正在播放（經典/側邊欄/沉浸式/歌詞/旋轉CD-5布局）",
+  "Search library: tracks, artists, albums...": "搜索庫：曲目、藝術家、專輯。..",
+  "Maximize": "最大化",
+  "Cover": "封面",
+  "System Settings": "系統設定",
+  "Classic": "經典",
+  "Sidebar": "側邊欄",
+  "Immersive": "沉浸式",
+  "Lyrics": "歌詞",
+  "Rotating CD": "旋轉CD",
+  "Left Position": "左側位置",
+  "Right Position": "右側位置",
+  "Show Info": "顯示資訊",
+  "Show Lyrics": "顯示歌詞",
+  "Cover/CD": "封面/CD",
+  "Loop Mode": "循環模式",
+  "Grid View": "網格視圖",
+  "List View": "列表視圖",
+  "Swap Left/Right": "交換左/右",
+  "Swap Top/Bottom": "交換頂部/底部",
+  "Sequential": "順序",
+  "<a>Get more components</a>n<a>Why are some components grayed out?</a>": {
+    "__default__": "<a>獲取更多元件</a>n<a>為什麼有些元件顯示為灰色？",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "<a>Syntax help</a>": {
+    "__default__": "<a>語法幫助</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Media library not enabled\nPlease configure media library in foobar2000": "媒體庫未啟用\n請在 foobar2000 中配置媒體庫",
+  "FooLocalizeJsTest": "",
+  "&Reload": "重新加載(&R)",
+  "&Edit panel script...": "編輯面板腳本(&E)...",
+  "&Panel properties...": "面板屬性(&P)...",
+  "&Open component folder": "打開元件資料夾(&O)",
+  "&Open documentation": "打開文檔(&O)",
+  "&Panel list": "面板列表(&P)",
+  "Pseudotransparency": "偽透明度",
+  "Caption": "標題",
+  "Height": "高度",
+  "Script": "腳本",
+  "Temporary file": "臨時文件",
+  "Temporary file *": "臨時文件*",
+  "Presets": "預設",
+  "WSH Panel Mod": "WSH面板模塊",
+  "Add panel": "新增面板",
+  "Splitters": "分離器",
+  "JSplitter": "",
+  "Reload": "重新加載",
+  "Edit properties...": "編輯屬性...",
+  "Clear properties": "清除屬性",
+  "JScript Panel 3": "",
+  "Turn the Dynamic Multi-Lang Engine on or off": "打開或關閉動態翻譯引擎",
+  "Requires Multi-Lang Engine; replaces text when string tables and dialog resources load (Windows only; independent of menu/dialog/content scopes)": "需要翻譯引擎；加載字符串表和對話框資源時替換文本（僅限Windows；獨立於菜單/對話框/內容範圍）",
+  "Translate main and context menus (most stable)": "翻譯主菜單和上下文菜單（最穩定）",
+  "Translates the Default UI owner-drawn menu bar; turn off if preference controls that share menu strings ghost (Windows only)": "翻譯預設UI自繪菜單欄；如果共享菜單字符串的偏好設定控制項重影，則關閉（僅限Windows）",
+  "Translate preferences, dialogs, and window text (may ghost)": "翻譯偏好設定、對話框和視窗文本（可能會重影）",
+  "Translate text on playlist, library, and similar panels": "翻譯播放列表、庫和類似面板上的文本",
+  "Collect untranslated English strings into harvest.txt": "將未翻譯的英文字符串收集到harvest.txt中",
+  "Open the language pack manager": "打開語言包管理器",
+  "&Samples": {
+    "__default__": "(&S)示例",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Script source": {
+    "__default__": "腳本源",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Editor": {
+    "__default__": "編輯器",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "JSplitter Configuration": {
+    "__default__": "JSplitter配置",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel name:": {
+    "__default__": "面板名稱:",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "No edge": {
+    "__default__": "無邊緣",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sunken edge": {
+    "__default__": "下沉邊緣",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Grey edge": {
+    "__default__": "灰色邊緣",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Use pseudo-transparency": {
+    "__default__": "使用偽透明度",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sample": {
+    "__default__": "示例",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "In-memory": {
+    "__default__": "記憶體中",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package": {
+    "__default__": "包",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package manager": {
+    "__default__": "包管理器",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Edit script...": {
+    "__default__": "編輯腳本...",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel list": {
+    "__default__": "面板列表",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Foobar2000 Player": ""
 }
