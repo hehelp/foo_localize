@@ -210,8 +210,8 @@ Enable the engine, the translation scopes (including the DUI main menu), Develop
 
 ## API for other components
 
-C++ components: the header and a buildable sample live in `[sdk/](sdk/README.md)`. Copy `[sdk/foo_localize_api.h](sdk/foo_localize_api.h)` into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: `[sdk/sample/](sdk/sample/README.md)`.
+C++ components: the header and a buildable sample live in [`sdk/`](sdk/README.md). Copy [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: [`sdk/sample/`](sdk/sample/README.md).
 
-JScript / SMP panels (Windows only): `new ActiveXObject("FooLocalize.Engine")` with read-only `Translate` / `GetLanguage` / `IsEnabled`. If the component is not installed, catch the error and keep English.
+JScript Panel 3 (Windows only): paste [`sdk/foo_localize.js`](sdk/foo_localize.js) into a panel. Use `new ActiveXObject("FooLocalize.Engine")` and `gr.WriteText` (same as Klyrics). If the component is not installed, catch the error and keep English.
 
 See [Component API](docs/api.en.md). 中文：[docs/api.md](docs/api.md).

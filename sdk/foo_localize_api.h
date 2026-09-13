@@ -6,7 +6,7 @@
 //   if (localize_api::tryGet(api)) { ... }
 // To hear language changes, implement localize_notify and register
 //   FB2K_SERVICE_FACTORY(your_notify);
-// JS panels (Windows only): ActiveXObject("FooLocalize.Engine") — see doc/09.
+// JS panels (Windows only): ActiveXObject("FooLocalize.Engine") — see docs/api.md and sdk/foo_localize.js.
 // GUIDs: {5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17} / {C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}
 // Public copy + sample plugin: github/sdk/
 

@@ -206,8 +206,8 @@ Windows **Columns UI 状态栏**音量格目前画的是 `-3.00 dB`，没有可�
 
 ## 给其他组件的 API
 
-C++ 组件：头文件和可编译示例在 `[sdk/](sdk/README.md)`。把 `[sdk/foo_localize_api.h](sdk/foo_localize_api.h)` 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：`[sdk/sample/](sdk/sample/README.md)`。
+C++ 组件：头文件和可编译示例在 [`sdk/`](sdk/README.md)。把 [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) 拷进你的工程，用 `localize_api::tryGet` 查询/切换语言、翻译字符串；实现 `localize_notify` 并 `FB2K_SERVICE_FACTORY` 即可在语言切换时收到广播。完整插件示例：[`sdk/sample/`](sdk/sample/README.md)。
 
-JScript / SMP 面板（仅 Windows）：`new ActiveXObject("FooLocalize.Engine")`，只读方法 `Translate` / `GetLanguage` / `IsEnabled`。未安装本组件时 `try/catch` 回退英文。
+JScript Panel 3（仅 Windows）：把 [`sdk/foo_localize.js`](sdk/foo_localize.js) 贴进面板。用 `new ActiveXObject("FooLocalize.Engine")` 和 `gr.WriteText`（与快乐歌词相同）。未安装本组件时 `try/catch` 回退英文。
 
 说明见 [组件 API](docs/api.md)。English: [docs/api.en.md](docs/api.en.md)。

@@ -4,8 +4,9 @@
 
 | 文件 | 说明 |
 | --- | --- |
-| [`foo_localize_api.h`](foo_localize_api.h) | 公开接口：`localize_api`、`localize_notify` |
-| [`sample/`](sample/) | 可编译的示例插件，演示全部调用 |
+| [`foo_localize_api.h`](foo_localize_api.h) | C++ 公开接口：`localize_api`、`localize_notify` |
+| [`foo_localize.js`](foo_localize.js) | JScript Panel 3 示例（`WriteText`，与快乐歌词相同画法） |
+| [`sample/`](sample/) | 可编译的 C++ 示例插件 |
 
 运行时若用户没装 foo_localize，`localize_api::tryGet` 返回 false，调用方应继续用原文。
 
@@ -66,4 +67,21 @@ FB2K_SERVICE_FACTORY(my_localize_notify);
 | `localize_api` | `{5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17}` |
 | `localize_notify` | `{C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}` |
 
-完整示例与编译说明见 [`sample/README.md`](sample/README.md)。
+完整 C++ 示例与编译说明见 [`sample/README.md`](sample/README.md)。
+
+## JS 面板（Windows，JScript Panel 3）
+
+把 [`foo_localize.js`](foo_localize.js) 整段贴进 JScript Panel 3.4+。画字用 `gr.WriteText`，字体是 `JSON.stringify({Name, Size})`，颜色用 `RGB()`。没有 `GdiDrawText` / `DrawString` / `gdi.Font`。
+
+```javascript
+var engine = null;
+try {
+    engine = new ActiveXObject("FooLocalize.Engine");
+} catch (e) {}
+
+function _(text) {
+    return engine ? engine.Translate(text) : text;
+}
+```
+
+未安装组件时 `engine` 为 `null`，`_()` 回原文。说明见 [docs/api.md](../docs/api.md)。

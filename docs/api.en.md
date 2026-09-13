@@ -5,6 +5,7 @@
 The public header and a buildable sample live in [`../sdk/`](../sdk/README.md).
 
 - Header: [`../sdk/foo_localize_api.h`](../sdk/foo_localize_api.h)
+- JScript Panel 3 sample: [`../sdk/foo_localize.js`](../sdk/foo_localize.js)
 - Sample component: [`../sdk/sample/`](../sdk/sample/README.md)
 
 Copy `foo_localize_api.h` into your project. **Do not** link any foo_localize library. If the engine is not installed, `localize_api::tryGet` returns false and the caller should keep the original string.
