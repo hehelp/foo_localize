@@ -88,4 +88,6 @@ function _(text) {
 }
 ```
 
-未安装组件时 `engine` 为 `null`，`_()` 回原文。自检细节见脚本初始化段。说明见 [docs/api.md](../docs/api.md)。
+未安装组件时 `engine` 为 `null`，`_()` 回原文。
+
+`Enable` / `Disable` 只控制挂钩**换字**；`EnableTranslation` / `DisableTranslation` 只控制 `Translate()` **查词**。二者不要混用。详见 [docs/api.md](../docs/api.md)。

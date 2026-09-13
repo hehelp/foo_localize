@@ -132,7 +132,7 @@ JScript Panel / Spider Monkey Panel 自绘文字不走 C++ 服务，用 COM：`F
 
 每个 `ActiveXObject` 实例自带一份面板状态（`Skip`、`SetPanelType`、`SetContextType`）。建议全局只创建一次，不要在 `on_paint` 里反复 `new`。
 
-总开关关闭、词典未命中、或该实例正处于 `Skip()` 时，`Translate` 返回原文。不要把路径、曲目名传进去。
+`Translate` 只受查词闸约束：`DisableTranslation()`、词典未命中、或空串时回原文。它**不**看 `Enable`/`Disable`（换字）和「启用多语引擎」。不要把路径、曲目名传进去。
 
 画字语法按面板组件区分：
 
@@ -151,7 +151,18 @@ JScript Panel 3.4 没有 `GdiDrawText` / `DrawString` / `gdi.Font`。写法与�
 | `dialog` | 翻译对话框 |
 | `content` / `playlist` / `library` | 翻译播放列表和媒体库（三者等价） |
 
-建议在每次 `on_paint` 开头再调一次 `SetPanelType`，以便把当前 HWND 绑到这个实例。`Enable` / `Disable` / `SetLanguage` 会改全局 `cfg_var`，请只在用户明确操作时调用。
+建议在每次 `on_paint` 开头再调一次 `SetPanelType`，以便把当前 HWND 绑到这个实例。`SetLanguage` 会改全局语言包配置，请只在用户明确选语言时调用。`Enable` / `Disable` 只改换字，不写「启用多语引擎」。
+
+#### 换字 vs 查词（不要混）
+
+| | `Enable` / `Disable` | `EnableTranslation` / `DisableTranslation` |
+| --- | --- | --- |
+| **管什么** | **换字**：挂钩要不要把界面原文换成译文 | **查词**：`Translate()` 要不要查词典 |
+| **作用范围** | 全局，或 `Enable(hwnd)` / `Disable(hwnd)` 只覆盖一个窗口 | 这个 `engine` 实例 |
+| **关了之后** | 菜单/对话框等不再被挂钩替换；`Translate()` **仍能**出译文 | `Translate()` 一律回原文；挂钩换字**不受影响** |
+| **不管什么** | 不装/卸挂钩，不改用户「启用多语引擎」勾选 | 不改换字，不改插件总闸 |
+
+只有用户在首选项里打开「启用多语引擎」，挂钩才会动态换字。脚本用 `IsPluginEnabled()` 读这个勾选，不能改它。
 
 JScript Panel 3.4 用的是旧版 JScript（ES3/ES5）。不要用 `let` / `const`、箭头函数、默认参数、对象方法简写。也不要把文档里的 `[, lang]` 抄进脚本，那不是合法语法。
 
@@ -182,6 +193,8 @@ if (engine) {
         var lang = engine.GetLanguage();
         check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
         check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("IsPluginEnabled", engine.IsPluginEnabled() === true || engine.IsPluginEnabled() === false);
+        check("IsEnabledTranslation", engine.IsEnabledTranslation() === true);
         check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
         check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
         check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
@@ -190,10 +203,13 @@ if (engine) {
         check("SetContextType", engine.SetContextType("menu") === true);
         check("ClearContextType", engine.ClearContextType("menu") === true);
         check("ClearContextType()", engine.ClearContextType() === true);
+        engine.DisableTranslation();
+        check("DisableTranslation", engine.Translate("Play") === "Play");
+        engine.EnableTranslation();
+        check("EnableTranslation", engine.Translate("Play") !== "");
         engine.Skip();
-        check("Skip Translate", engine.Translate("Play") === "Play");
+        check("Skip still Translate", engine.Translate("Play") !== "");
         engine.Continue();
-        check("Continue", engine.Translate("Play") !== "");
         check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
         check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
         var key = "FooLocalizeJsTest";
@@ -225,8 +241,8 @@ function _(text) {
 | **参数** | `text`（String，必填）：英文原文，即词典键。 |
 | | `hwnd`（Number，可选）：窗口句柄，通常传 `window.ID`。引擎会按该 HWND 取类名 / 控件 ID，再匹配规则对象。 |
 | | `className`（String，可选）：控件类名，例如 `"SysHeader32"`、`"Button"`。与 `hwnd` 二选一，都作为第二参。 |
-| **返回值** | `String`。命中则返回译文；总开关关闭、本实例 `Skip()` 中、空串、或未命中时返回原文。 |
-| **说明** | 只传 `text` 时，规则对象只看 `__default__`（`false` 或空视为未命中）。第二参是数字且非 0 当作 HWND；是字符串则当作类名。 |
+| **返回值** | `String`。命中则返回译文；查词闸关闭、空串、或未命中时返回原文。 |
+| **说明** | 不依赖「启用多语引擎」和 `IsEnabled()` 换字闸。只传 `text` 时，规则对象只看 `__default__`（`false` 或空视为未命中）。第二参是数字且非 0 当作 HWND；是字符串则当作类名。 |
 
 ```javascript
 var label = engine.Translate("Play");
@@ -238,47 +254,57 @@ gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 
 ---
 
-### `GetLanguage()` / `IsEnabled()`
+### `GetLanguage()` / `IsEnabled([hwnd])` / `IsPluginEnabled()`
 
-只读。JSplitter / SMP 必须带括号当方法调。JScript Panel 3 后期绑定也可以写成 `engine.IsEnabled`，但跨面板请统一写 `IsEnabled()`。
+只读。JSplitter / SMP 必须带括号当方法调。
 
-| | `GetLanguage()` | `IsEnabled()` |
-| --- | --- | --- |
-| **参数** | 无 | 无 |
-| **返回值** | `String`：当前语言包 id，与 `foo-lang` 文件名一致，例如 `"zh-CN"`。引擎不可用时返回 `""`。 | `Boolean`：组件总开关是否打开。 |
-| **说明** | 不改配置。 | 总开关关闭时，挂钩和 `Translate` 都不翻译。 |
+| | `GetLanguage()` | `IsEnabled([hwnd])` | `IsPluginEnabled()` |
+| --- | --- | --- | --- |
+| **参数** | 无 | `hwnd`（Number，可选） | 无 |
+| **返回值** | 当前语言包 id，引擎不可用时 `""` | 无参：全局**换字**位。有 hwnd：该窗口现在会不会被挂钩换字（插件关则为 `false`） | 首选项里「启用多语引擎」是否打开 |
+| **说明** | 不改配置。 | **不再**表示插件总闸。插件关着时挂钩不换字，但 `Translate` 仍可查词。 | 只读用户勾选。脚本不能改这个位。 |
 
 ```javascript
-if (!engine || !engine.IsEnabled()) {
-    return;
-}
 var lang = engine.GetLanguage(); // "zh-CN"
+var hooksOn = engine.IsPluginEnabled();
+var replaceAll = engine.IsEnabled();
+var thisPanel = engine.IsEnabled(window.ID);
 ```
 
 ---
 
-### `Enable()` / `Disable()`
+### `Enable([hwnd])` / `Disable([hwnd])`
 
-改**全局**总开关，写入用户配置，立刻对所有面板和挂钩生效。
+**只控制换字，不控制查词。** 挂钩要不要把界面原文换成译文。不改首选项里的「启用多语引擎」，也不装/卸挂钩。要关 `Translate()` 请用下面的 `DisableTranslation()`。
+
+| | |
+| --- | --- |
+| **参数** | `hwnd`（Number，可选）。省略则改全局换字位。传入 `window.ID` 则只覆盖该窗口（及直接子窗口）。 |
+| **返回值** | `Boolean`。引擎可用且参数有效为 `true`。 |
+| **说明** | 插件关着时改换字位只记账，等用户打开插件后才动态换字。`Disable()` 后整机不再换字，但 `Translate()` 仍可用。`Enable(window.ID)` 可在全局换字关闭时只译本面板。不要在 `on_paint` 里反复开关。 |
+
+```javascript
+engine.Disable();
+engine.Enable(window.ID);
+var byHwnd = engine.Translate("Play", window.ID);
+```
+
+---
+
+### `EnableTranslation()` / `DisableTranslation()` / `IsEnabledTranslation()`
+
+**只控制查词，不控制换字。** 本实例的 `Translate()` 要不要查词典。与 `Enable`/`Disable`、插件总闸都独立。默认开。要停挂钩换字请用上面的 `Disable()` / `Disable(hwnd)`。
 
 | | |
 | --- | --- |
 | **参数** | 无 |
-| **返回值** | `Boolean`。引擎可用则为 `true`（即使开关值没变）；引擎不可用为 `false`。 |
-| **说明** | 只在用户点按钮 / 菜单时调用，不要在 `on_paint` 里开关。 |
+| **返回值** | `Boolean`。引擎可用为 `true`（`IsEnabledTranslation` 另表示闸是否开）。 |
+| **说明** | 关掉后 `Translate` 原样返回。不影响挂钩换字。 |
 
 ```javascript
-function on_button_enable() {
-    if (engine) {
-        engine.Enable();
-    }
-}
-
-function on_button_disable() {
-    if (engine) {
-        engine.Disable();
-    }
-}
+engine.DisableTranslation();
+engine.Translate("Play"); // "Play"
+engine.EnableTranslation();
 ```
 
 ---
@@ -347,7 +373,7 @@ gr.WriteText(engine.Translate("Play"), font, color, 0, rowH, w, rowH);
 
 ### `Skip()` / `Continue()`
 
-跳过 / 恢复**本实例**的翻译。`Skip` 之后，本面板的 `Translate()` 以及 SMP 的 `GdiDrawText` → `DrawTextW` 挂钩都不再替换字符串，直到 `Continue()`。JSP3 的 `WriteText` 不挂钩，不译的字符串不要包 `Translate`。
+跳过 / 恢复**本实例**的挂钩换字（如 SMP `GdiDrawText` → `DrawTextW`）。不再影响 `Translate()`。JSP3 的 `WriteText` 不挂钩，不译的字符串不要包 `Translate`，或用 `DisableTranslation()`。
 
 | | |
 | --- | --- |
@@ -454,6 +480,8 @@ if (engine) {
         var lang = engine.GetLanguage();
         check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
         check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("IsPluginEnabled", engine.IsPluginEnabled() === true || engine.IsPluginEnabled() === false);
+        check("IsEnabledTranslation", engine.IsEnabledTranslation() === true);
         check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
         check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
         check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
@@ -462,10 +490,13 @@ if (engine) {
         check("SetContextType", engine.SetContextType("menu") === true);
         check("ClearContextType", engine.ClearContextType("menu") === true);
         check("ClearContextType()", engine.ClearContextType() === true);
+        engine.DisableTranslation();
+        check("DisableTranslation", engine.Translate("Play") === "Play");
+        engine.EnableTranslation();
+        check("EnableTranslation", engine.Translate("Play") !== "");
         engine.Skip();
-        check("Skip Translate", engine.Translate("Play") === "Play");
+        check("Skip still Translate", engine.Translate("Play") !== "");
         engine.Continue();
-        check("Continue", engine.Translate("Play") !== "");
         check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
         check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
         var key = "FooLocalizeJsTest";
@@ -508,7 +539,7 @@ function on_paint(gr) {
         gr.FillSolidRect(0, 0, w, h, RGB(20, 20, 26));
     }
 
-    if (!engine || !engine.IsEnabled()) {
+    if (!engine) {
         draw_text(gr, "Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }

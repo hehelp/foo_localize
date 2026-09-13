@@ -132,7 +132,7 @@ JScript Panel / Spider Monkey Panel custom drawing cannot use the C++ service ab
 
 Each `ActiveXObject` instance has its own panel state (`Skip`, `SetPanelType`, `SetContextType`). Create it once globally; do not `new` it inside `on_paint`.
 
-`Translate` returns the source when the master switch is off, the dictionary misses, or this instance is inside `Skip()`. Do not pass paths or track titles.
+`Translate` is gated only by the query switch: it returns the source after `DisableTranslation()`, on a dictionary miss, or when `text` is empty. It does **not** look at `Enable`/`Disable` (replacement) or **Enable Multi-Lang Engine**. Do not pass paths or track titles.
 
 Drawing APIs differ by panel component:
 
@@ -151,7 +151,18 @@ JScript Panel 3.4 has no `GdiDrawText` / `DrawString` / `gdi.Font`. Use the same
 | `dialog` | Translate dialogs |
 | `content` / `playlist` / `library` | Translate playlist and library (all three are the same) |
 
-Call `SetPanelType` again at the start of every `on_paint` so the current HWND is bound to this instance. `Enable` / `Disable` / `SetLanguage` write global `cfg_var`s; call them only on an explicit user action.
+Call `SetPanelType` again at the start of every `on_paint` so the current HWND is bound to this instance. `SetLanguage` writes the global pack setting; call it only when the user picks a language. `Enable` / `Disable` change replacement only; they do not write **Enable Multi-Lang Engine**.
+
+#### Replacement vs query (do not mix them)
+
+| | `Enable` / `Disable` | `EnableTranslation` / `DisableTranslation` |
+| --- | --- | --- |
+| **Controls** | **Replacement**: whether hooks swap on-screen source text for a translation | **Query**: whether `Translate()` looks up the dictionary |
+| **Scope** | Global, or one window via `Enable(hwnd)` / `Disable(hwnd)` | This `engine` instance |
+| **When off** | Menus/dialogs are no longer replaced by hooks; `Translate()` **still** returns translations | `Translate()` always returns the source; hook replacement is **unchanged** |
+| **Does not** | Install or remove hooks, or change the user's plugin checkbox | Change replacement or the plugin master switch |
+
+Hooks replace text only while the user has **Enable Multi-Lang Engine** on. Scripts read that checkbox with `IsPluginEnabled()` and cannot change it.
 
 JScript Panel 3.4 uses legacy JScript (ES3/ES5). Do not use `let` / `const`, arrow functions, default parameters, or object-literal method shorthand. Do not paste `[, lang]` from the docs into a script; that is not valid syntax.
 
@@ -182,6 +193,8 @@ if (engine) {
         var lang = engine.GetLanguage();
         check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
         check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("IsPluginEnabled", engine.IsPluginEnabled() === true || engine.IsPluginEnabled() === false);
+        check("IsEnabledTranslation", engine.IsEnabledTranslation() === true);
         check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
         check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
         check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
@@ -190,10 +203,13 @@ if (engine) {
         check("SetContextType", engine.SetContextType("menu") === true);
         check("ClearContextType", engine.ClearContextType("menu") === true);
         check("ClearContextType()", engine.ClearContextType() === true);
+        engine.DisableTranslation();
+        check("DisableTranslation", engine.Translate("Play") === "Play");
+        engine.EnableTranslation();
+        check("EnableTranslation", engine.Translate("Play") !== "");
         engine.Skip();
-        check("Skip Translate", engine.Translate("Play") === "Play");
+        check("Skip still Translate", engine.Translate("Play") !== "");
         engine.Continue();
-        check("Continue", engine.Translate("Play") !== "");
         check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
         check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
         var key = "FooLocalizeJsTest";
@@ -225,8 +241,8 @@ Look up the dictionary and return the translation.
 | **Parameters** | `text` (String, required): English source / dictionary key. |
 | | `hwnd` (Number, optional): window handle, usually `window.ID`. The engine reads class name / control ID from that HWND and matches rule objects. |
 | | `className` (String, optional): control class, e.g. `"SysHeader32"`, `"Button"`. Same slot as `hwnd` — pass one or the other. |
-| **Returns** | `String`. Translation on hit; the original text when the master switch is off, this instance is inside `Skip()`, `text` is empty, or there is no match. |
-| **Notes** | With only `text`, rule objects use `__default__` only (`false` or empty is a miss). A non-zero number is treated as HWND; a string is treated as a class name. |
+| **Returns** | `String`. Translation on hit; the original text when the query gate is off, `text` is empty, or there is no match. |
+| **Notes** | Does not depend on **Enable Multi-Lang Engine** or the `IsEnabled()` replacement gate. With only `text`, rule objects use `__default__` only (`false` or empty is a miss). A non-zero number is treated as HWND; a string is treated as a class name. |
 
 ```javascript
 var label = engine.Translate("Play");
@@ -238,47 +254,57 @@ gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 
 ---
 
-### `GetLanguage()` / `IsEnabled()`
+### `GetLanguage()` / `IsEnabled([hwnd])` / `IsPluginEnabled()`
 
-Read-only. JSplitter / SMP must call these as methods with parentheses. JScript Panel 3 late binding also accepts `engine.IsEnabled`, but use `IsEnabled()` in any script that should run on both hosts.
+Read-only. JSplitter / SMP must call these as methods with parentheses.
 
-| | `GetLanguage()` | `IsEnabled()` |
-| --- | --- | --- |
-| **Parameters** | none | none |
-| **Returns** | `String`: current pack id, matching the `foo-lang` file name, e.g. `"zh-CN"`. Empty string if the engine is unavailable. | `Boolean`: whether the component master switch is on. |
-| **Notes** | Does not change settings. | When off, hooks and `Translate` leave strings unchanged. |
+| | `GetLanguage()` | `IsEnabled([hwnd])` | `IsPluginEnabled()` |
+| --- | --- | --- | --- |
+| **Parameters** | none | `hwnd` (Number, optional) | none |
+| **Returns** | Current pack id, or `""` if unavailable | No arg: global **replacement** flag. With hwnd: whether hooks will replace text on that window (`false` if the plugin is off) | Whether **Enable Multi-Lang Engine** is on in Preferences |
+| **Notes** | Does not change settings. | No longer the plugin master switch. With the plugin off, hooks do not replace text, but `Translate` can still look up the dictionary. | Read-only. Scripts cannot change this bit. |
 
 ```javascript
-if (!engine || !engine.IsEnabled()) {
-    return;
-}
 var lang = engine.GetLanguage(); // "zh-CN"
+var hooksOn = engine.IsPluginEnabled();
+var replaceAll = engine.IsEnabled();
+var thisPanel = engine.IsEnabled(window.ID);
 ```
 
 ---
 
-### `Enable()` / `Disable()`
+### `Enable([hwnd])` / `Disable([hwnd])`
 
-Toggle the **global** master switch. The change is persisted and applies immediately to every panel and hook.
+**Replacement only, not query.** Whether hooks swap on-screen source text for a translation. Does not change **Enable Multi-Lang Engine**, and does not install or remove hooks. To stop `Translate()`, use `DisableTranslation()` below.
+
+| | |
+| --- | --- |
+| **Parameters** | `hwnd` (Number, optional). Omit to change the global replacement flag. Pass `window.ID` to override that window (and its direct child). |
+| **Returns** | `Boolean`. `true` if the engine is available and the argument is valid. |
+| **Notes** | If the plugin is off, the flag is stored and applies only after the user enables the plugin. After `Disable()`, hooks no longer replace UI text, but `Translate()` still works. `Enable(window.ID)` can replace text on one panel while global replacement is off. Do not toggle this from `on_paint`. |
+
+```javascript
+engine.Disable();
+engine.Enable(window.ID);
+var byHwnd = engine.Translate("Play", window.ID);
+```
+
+---
+
+### `EnableTranslation()` / `DisableTranslation()` / `IsEnabledTranslation()`
+
+**Query only, not replacement.** Whether this instance's `Translate()` looks up the dictionary. Independent of `Enable`/`Disable` and the plugin switch. On by default. To stop hook replacement, use `Disable()` / `Disable(hwnd)` above.
 
 | | |
 | --- | --- |
 | **Parameters** | none |
-| **Returns** | `Boolean`. `true` if the engine is available (even if the value did not change); `false` if the engine is unavailable. |
-| **Notes** | Call from a user button / menu, not from `on_paint`. |
+| **Returns** | `Boolean`. `true` if the engine is available (`IsEnabledTranslation` also reports whether the gate is on). |
+| **Notes** | When off, `Translate` returns the original string. Hooks are unaffected. |
 
 ```javascript
-function on_button_enable() {
-    if (engine) {
-        engine.Enable();
-    }
-}
-
-function on_button_disable() {
-    if (engine) {
-        engine.Disable();
-    }
-}
+engine.DisableTranslation();
+engine.Translate("Play"); // "Play"
+engine.EnableTranslation();
 ```
 
 ---
@@ -347,7 +373,7 @@ gr.WriteText(engine.Translate("Play"), font, color, 0, rowH, w, rowH);
 
 ### `Skip()` / `Continue()`
 
-Skip / resume translation for **this instance**. After `Skip`, `Translate()` and SMP `GdiDrawText` → `DrawTextW` hooks leave strings unchanged until `Continue()`. JSP3 `WriteText` is not hooked; omit `Translate` for text that should stay original.
+Skip / resume **hook replacement** for this instance (e.g. SMP `GdiDrawText` → `DrawTextW`). Does not affect `Translate()`. JSP3 `WriteText` is not hooked; omit `Translate` or call `DisableTranslation()` for text that should stay original.
 
 | | |
 | --- | --- |
@@ -454,6 +480,8 @@ if (engine) {
         var lang = engine.GetLanguage();
         check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
         check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("IsPluginEnabled", engine.IsPluginEnabled() === true || engine.IsPluginEnabled() === false);
+        check("IsEnabledTranslation", engine.IsEnabledTranslation() === true);
         check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
         check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
         check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
@@ -462,10 +490,13 @@ if (engine) {
         check("SetContextType", engine.SetContextType("menu") === true);
         check("ClearContextType", engine.ClearContextType("menu") === true);
         check("ClearContextType()", engine.ClearContextType() === true);
+        engine.DisableTranslation();
+        check("DisableTranslation", engine.Translate("Play") === "Play");
+        engine.EnableTranslation();
+        check("EnableTranslation", engine.Translate("Play") !== "");
         engine.Skip();
-        check("Skip Translate", engine.Translate("Play") === "Play");
+        check("Skip still Translate", engine.Translate("Play") !== "");
         engine.Continue();
-        check("Continue", engine.Translate("Play") !== "");
         check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
         check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
         var key = "FooLocalizeJsTest";
@@ -508,7 +539,7 @@ function on_paint(gr) {
         gr.FillSolidRect(0, 0, w, h, RGB(20, 20, 26));
     }
 
-    if (!engine || !engine.IsEnabled()) {
+    if (!engine) {
         draw_text(gr, "Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }

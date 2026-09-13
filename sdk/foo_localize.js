@@ -1,4 +1,5 @@
 // foo_localize.js — JScript Panel 3 / JSplitter / SMP sample.
+// Enable/Disable = hook replacement. EnableTranslation/DisableTranslation = Translate() lookup.
 // Paste into the panel script. Call COM methods with parentheses.
 // Startup writes ok/FAIL lines to the console so host mismatches show up immediately.
 // Docs: https://github.com/hehelp/foo_localize/blob/main/docs/api.md
@@ -29,6 +30,8 @@ if (engine) {
         var lang = engine.GetLanguage();
         check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
         check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("IsPluginEnabled", engine.IsPluginEnabled() === true || engine.IsPluginEnabled() === false);
+        check("IsEnabledTranslation", engine.IsEnabledTranslation() === true);
         check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
         check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
         check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
@@ -37,10 +40,13 @@ if (engine) {
         check("SetContextType", engine.SetContextType("menu") === true);
         check("ClearContextType", engine.ClearContextType("menu") === true);
         check("ClearContextType()", engine.ClearContextType() === true);
+        engine.DisableTranslation();
+        check("DisableTranslation", engine.Translate("Play") === "Play");
+        engine.EnableTranslation();
+        check("EnableTranslation", engine.Translate("Play") !== "");
         engine.Skip();
-        check("Skip Translate", engine.Translate("Play") === "Play");
+        check("Skip still Translate", engine.Translate("Play") !== "");
         engine.Continue();
-        check("Continue", engine.Translate("Play") !== "");
         check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
         check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
         var key = "FooLocalizeJsTest";
@@ -83,7 +89,7 @@ function on_paint(gr) {
         gr.FillSolidRect(0, 0, w, h, RGB(20, 20, 26));
     }
 
-    if (!engine || !engine.IsEnabled()) {
+    if (!engine) {
         draw_text(gr, "Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }
