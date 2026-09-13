@@ -5,7 +5,7 @@
 The public header and a buildable sample live in [`../sdk/`](../sdk/README.md).
 
 - Header: [`../sdk/foo_localize_api.h`](../sdk/foo_localize_api.h)
-- JScript Panel 3 sample: [`../sdk/foo_localize.js`](../sdk/foo_localize.js)
+- JS panel sample (JScript Panel 3 / JSplitter): [`../sdk/foo_localize.js`](../sdk/foo_localize.js)
 - Sample component: [`../sdk/sample/`](../sdk/sample/README.md)
 
 Copy `foo_localize_api.h` into your project. **Do not** link any foo_localize library. If the engine is not installed, `localize_api::tryGet` returns false and the caller should keep the original string.
@@ -157,24 +157,62 @@ JScript Panel 3.4 uses legacy JScript (ES3/ES5). Do not use `let` / `const`, arr
 
 ### Create the object
 
+Same snippet for JScript Panel 3 and JSplitter / SMP. Initialization writes `ok` / `FAIL` to the console so host mismatches show up immediately. Always call methods with parentheses. The runnable sample is [`../sdk/foo_localize.js`](../sdk/foo_localize.js).
+
 ```javascript
+function log(msg) {
+    try {
+        console.log(msg);
+    } catch (ignored) {}
+}
+
+function check(name, ok, extra) {
+    log((ok ? "ok  " : "FAIL") + " " + name + (extra ? " " + extra : ""));
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
-} catch (e) {}
-
-function RGB(r, g, b) {
-    return 0xff000000 | (r << 16) | (g << 8) | b;
+} catch (e) {
+    log("FooLocalize FAIL: " + e.message);
 }
 
-var font = JSON.stringify({Name: "Segoe UI", Size: 16});
+if (engine) {
+    try {
+        var lang = engine.GetLanguage();
+        check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
+        check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
+        check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
+        check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
+        check("SetPanelType", engine.SetPanelType("playlist") === true);
+        check("SetPanelType bad", engine.SetPanelType("nope") === false);
+        check("SetContextType", engine.SetContextType("menu") === true);
+        check("ClearContextType", engine.ClearContextType("menu") === true);
+        check("ClearContextType()", engine.ClearContextType() === true);
+        engine.Skip();
+        check("Skip Translate", engine.Translate("Play") === "Play");
+        engine.Continue();
+        check("Continue", engine.Translate("Play") !== "");
+        check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
+        check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
+        var key = "FooLocalizeJsTest";
+        engine.ModifyTranslation(key, "test", lang);
+        check("ModifyTranslation", engine.HasTranslation(key, lang) === true);
+    } catch (e) {
+        log("FooLocalize FAIL: " + e.message);
+        try {
+            engine.Continue();
+        } catch (ignored) {}
+    }
+}
 
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 ```
 
-If the component is not installed or COM is not registered, `new ActiveXObject` throws and `engine` stays `null`. Guard every call with `engine`. On JSP3 draw with `gr.WriteText`, a JSON font string, and `RGB()`, same as the Klyrics panel.
+If the component is not installed or COM is not registered, `new ActiveXObject` throws and `engine` stays `null`. Guard every call with `engine`. JSP3 draws with `gr.WriteText`; JSplitter / SMP use `gr.GdiDrawText` and `gdi.Font`. The SDK sample picks the host automatically. The self-check writes the key `FooLocalizeJsTest` via `ModifyTranslation`.
 
 ---
 
@@ -200,18 +238,18 @@ gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 
 ---
 
-### `GetLanguage()` / `IsEnabled`
+### `GetLanguage()` / `IsEnabled()`
 
-Read-only. Also work as properties: `engine.GetLanguage`, `engine.IsEnabled`.
+Read-only. JSplitter / SMP must call these as methods with parentheses. JScript Panel 3 late binding also accepts `engine.IsEnabled`, but use `IsEnabled()` in any script that should run on both hosts.
 
-| | `GetLanguage()` | `IsEnabled` / `IsEnabled()` |
+| | `GetLanguage()` | `IsEnabled()` |
 | --- | --- | --- |
 | **Parameters** | none | none |
 | **Returns** | `String`: current pack id, matching the `foo-lang` file name, e.g. `"zh-CN"`. Empty string if the engine is unavailable. | `Boolean`: whether the component master switch is on. |
 | **Notes** | Does not change settings. | When off, hooks and `Translate` leave strings unchanged. |
 
 ```javascript
-if (!engine || !engine.IsEnabled) {
+if (!engine || !engine.IsEnabled()) {
     return;
 }
 var lang = engine.GetLanguage(); // "zh-CN"
@@ -385,40 +423,100 @@ engine.ModifyTranslation("Play", "播放", "zh-CN");
 
 ---
 
-### Full `on_paint` demo (JScript Panel 3, same drawing style as Klyrics)
+### Full demo (JScript Panel 3 / JSplitter)
+
+Same as [`../sdk/foo_localize.js`](../sdk/foo_localize.js). Probes the API at startup. Uses `WriteText` on JSP3, otherwise JSplitter / SMP `GdiDrawText`.
 
 ```javascript
 function RGB(r, g, b) {
     return 0xff000000 | (r << 16) | (g << 8) | b;
 }
 
+function log(msg) {
+    try {
+        console.log(msg);
+    } catch (ignored) {}
+}
+
+function check(name, ok, extra) {
+    log((ok ? "ok  " : "FAIL") + " " + name + (extra ? " " + extra : ""));
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
-} catch (e) {}
+} catch (e) {
+    log("FooLocalize FAIL: " + e.message);
+}
 
-var g_font = JSON.stringify({Name: "Segoe UI", Size: 16});
-var g_font_hi = JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700});
+if (engine) {
+    try {
+        var lang = engine.GetLanguage();
+        check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
+        check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
+        check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
+        check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
+        check("SetPanelType", engine.SetPanelType("playlist") === true);
+        check("SetPanelType bad", engine.SetPanelType("nope") === false);
+        check("SetContextType", engine.SetContextType("menu") === true);
+        check("ClearContextType", engine.ClearContextType("menu") === true);
+        check("ClearContextType()", engine.ClearContextType() === true);
+        engine.Skip();
+        check("Skip Translate", engine.Translate("Play") === "Play");
+        engine.Continue();
+        check("Continue", engine.Translate("Play") !== "");
+        check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
+        check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
+        var key = "FooLocalizeJsTest";
+        engine.ModifyTranslation(key, "test", lang);
+        check("ModifyTranslation", engine.HasTranslation(key, lang) === true);
+    } catch (e) {
+        log("FooLocalize FAIL: " + e.message);
+        try {
+            engine.Continue();
+        } catch (ignored) {}
+    }
+}
+
+var g_jsp3 = typeof gdi === "undefined" || !gdi.Font;
+var g_font = g_jsp3
+    ? JSON.stringify({Name: "Segoe UI", Size: 16})
+    : gdi.Font("Segoe UI", 16, 0);
+var g_font_hi = g_jsp3
+    ? JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700})
+    : gdi.Font("Segoe UI", 22, 1);
 
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 
+function draw_text(gr, text, font, color, x, y, w, h) {
+    if (g_jsp3) {
+        gr.WriteText(text, font, color, x, y, w, h);
+        return;
+    }
+    gr.GdiDrawText(text, font, color, x, y, w, h, 0);
+}
+
 function on_paint(gr) {
     var w = window.Width;
     var h = window.Height;
-    gr.Clear(RGB(20, 20, 26));
+    if (g_jsp3) {
+        gr.Clear(RGB(20, 20, 26));
+    } else {
+        gr.FillSolidRect(0, 0, w, h, RGB(20, 20, 26));
+    }
 
-    if (!engine || !engine.IsEnabled) {
-        gr.WriteText("Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    if (!engine || !engine.IsEnabled()) {
+        draw_text(gr, "Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }
 
     engine.SetPanelType("playlist");
-
-    gr.WriteText("playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
-    gr.WriteText(_("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
-    gr.WriteText(_("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
+    draw_text(gr, "playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    draw_text(gr, _("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
+    draw_text(gr, _("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
 }
 
 function on_mouse_lbtn_up(x, y) {

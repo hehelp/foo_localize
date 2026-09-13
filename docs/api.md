@@ -5,7 +5,7 @@ English: [api.en.md](api.en.md)。
 接口头文件和可编译示例都在 [`../sdk/`](../sdk/README.md)。
 
 - 头文件：[`../sdk/foo_localize_api.h`](../sdk/foo_localize_api.h)
-- JScript Panel 3 示例：[`../sdk/foo_localize.js`](../sdk/foo_localize.js)
+- JS 面板示例（JScript Panel 3 / JSplitter）：[`../sdk/foo_localize.js`](../sdk/foo_localize.js)
 - 示例插件：[`../sdk/sample/`](../sdk/sample/README.md)
 
 把 `foo_localize_api.h` 拷进你的工程即可，**不要**链接任何 foo_localize 库。运行时若没装引擎，`localize_api::tryGet` 返回 false，调用方应继续用原文。
@@ -157,24 +157,62 @@ JScript Panel 3.4 用的是旧版 JScript（ES3/ES5）。不要用 `let` / `cons
 
 ### 创建实例
 
+JScript Panel 3 与 JSplitter / SMP 都用同一段。初始化时会在控制台打 `ok` / `FAIL`，便于发现宿主差异。方法一律带括号。完整可运行脚本见 [`../sdk/foo_localize.js`](../sdk/foo_localize.js)。
+
 ```javascript
+function log(msg) {
+    try {
+        console.log(msg);
+    } catch (ignored) {}
+}
+
+function check(name, ok, extra) {
+    log((ok ? "ok  " : "FAIL") + " " + name + (extra ? " " + extra : ""));
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
-} catch (e) {}
-
-function RGB(r, g, b) {
-    return 0xff000000 | (r << 16) | (g << 8) | b;
+} catch (e) {
+    log("FooLocalize FAIL: " + e.message);
 }
 
-var font = JSON.stringify({Name: "Segoe UI", Size: 16});
+if (engine) {
+    try {
+        var lang = engine.GetLanguage();
+        check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
+        check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
+        check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
+        check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
+        check("SetPanelType", engine.SetPanelType("playlist") === true);
+        check("SetPanelType bad", engine.SetPanelType("nope") === false);
+        check("SetContextType", engine.SetContextType("menu") === true);
+        check("ClearContextType", engine.ClearContextType("menu") === true);
+        check("ClearContextType()", engine.ClearContextType() === true);
+        engine.Skip();
+        check("Skip Translate", engine.Translate("Play") === "Play");
+        engine.Continue();
+        check("Continue", engine.Translate("Play") !== "");
+        check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
+        check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
+        var key = "FooLocalizeJsTest";
+        engine.ModifyTranslation(key, "test", lang);
+        check("ModifyTranslation", engine.HasTranslation(key, lang) === true);
+    } catch (e) {
+        log("FooLocalize FAIL: " + e.message);
+        try {
+            engine.Continue();
+        } catch (ignored) {}
+    }
+}
 
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 ```
 
-未安装组件或 COM 未注册时，`new ActiveXObject` 会抛错，`engine` 保持 `null`。之后每条方法都先判断 `engine`。JSP3 画字用 `gr.WriteText`，字体是 JSON 字符串，颜色用 `RGB()`，与快乐歌词一致。
+未安装组件或 COM 未注册时，`new ActiveXObject` 会抛错，`engine` 保持 `null`。之后每条方法都先判断 `engine`。JSP3 画字用 `gr.WriteText`；JSplitter / SMP 用 `gr.GdiDrawText` 和 `gdi.Font`。SDK 示例会按宿主自动选。`ModifyTranslation` 自检会写入键 `FooLocalizeJsTest`。
 
 ---
 
@@ -200,18 +238,18 @@ gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 
 ---
 
-### `GetLanguage()` / `IsEnabled`
+### `GetLanguage()` / `IsEnabled()`
 
-只读。也可当属性读：`engine.GetLanguage`、`engine.IsEnabled`。
+只读。JSplitter / SMP 必须带括号当方法调。JScript Panel 3 后期绑定也可以写成 `engine.IsEnabled`，但跨面板请统一写 `IsEnabled()`。
 
-| | `GetLanguage()` | `IsEnabled` / `IsEnabled()` |
+| | `GetLanguage()` | `IsEnabled()` |
 | --- | --- | --- |
 | **参数** | 无 | 无 |
 | **返回值** | `String`：当前语言包 id，与 `foo-lang` 文件名一致，例如 `"zh-CN"`。引擎不可用时返回 `""`。 | `Boolean`：组件总开关是否打开。 |
 | **说明** | 不改配置。 | 总开关关闭时，挂钩和 `Translate` 都不翻译。 |
 
 ```javascript
-if (!engine || !engine.IsEnabled) {
+if (!engine || !engine.IsEnabled()) {
     return;
 }
 var lang = engine.GetLanguage(); // "zh-CN"
@@ -385,40 +423,100 @@ engine.ModifyTranslation("Play", "播放", "zh-CN");
 
 ---
 
-### 完整 demo（JScript Panel 3，与快乐歌词相同画法）
+### 完整 demo（JScript Panel 3 / JSplitter）
+
+与 [`../sdk/foo_localize.js`](../sdk/foo_localize.js) 相同。启动时先自检接口。有 `WriteText` 走 JSP3 画法，否则走 JSplitter / SMP 的 `GdiDrawText`。
 
 ```javascript
 function RGB(r, g, b) {
     return 0xff000000 | (r << 16) | (g << 8) | b;
 }
 
+function log(msg) {
+    try {
+        console.log(msg);
+    } catch (ignored) {}
+}
+
+function check(name, ok, extra) {
+    log((ok ? "ok  " : "FAIL") + " " + name + (extra ? " " + extra : ""));
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
-} catch (e) {}
+} catch (e) {
+    log("FooLocalize FAIL: " + e.message);
+}
 
-var g_font = JSON.stringify({Name: "Segoe UI", Size: 16});
-var g_font_hi = JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700});
+if (engine) {
+    try {
+        var lang = engine.GetLanguage();
+        check("GetLanguage", typeof lang === "string" && lang.length > 0, lang);
+        check("IsEnabled", engine.IsEnabled() === true || engine.IsEnabled() === false, String(engine.IsEnabled()));
+        check("Translate", typeof engine.Translate("Play") === "string", engine.Translate("Play"));
+        check("Translate class", typeof engine.Translate("Title", "SysHeader32") === "string");
+        check("Translate hwnd", typeof engine.Translate("Play", window.ID) === "string");
+        check("SetPanelType", engine.SetPanelType("playlist") === true);
+        check("SetPanelType bad", engine.SetPanelType("nope") === false);
+        check("SetContextType", engine.SetContextType("menu") === true);
+        check("ClearContextType", engine.ClearContextType("menu") === true);
+        check("ClearContextType()", engine.ClearContextType() === true);
+        engine.Skip();
+        check("Skip Translate", engine.Translate("Play") === "Play");
+        engine.Continue();
+        check("Continue", engine.Translate("Play") !== "");
+        check("HasTranslation", engine.HasTranslation("Play") === true || engine.HasTranslation("Play") === false);
+        check("HasTranslation lang", engine.HasTranslation("Play", lang) === true || engine.HasTranslation("Play", lang) === false);
+        var key = "FooLocalizeJsTest";
+        engine.ModifyTranslation(key, "test", lang);
+        check("ModifyTranslation", engine.HasTranslation(key, lang) === true);
+    } catch (e) {
+        log("FooLocalize FAIL: " + e.message);
+        try {
+            engine.Continue();
+        } catch (ignored) {}
+    }
+}
+
+var g_jsp3 = typeof gdi === "undefined" || !gdi.Font;
+var g_font = g_jsp3
+    ? JSON.stringify({Name: "Segoe UI", Size: 16})
+    : gdi.Font("Segoe UI", 16, 0);
+var g_font_hi = g_jsp3
+    ? JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700})
+    : gdi.Font("Segoe UI", 22, 1);
 
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 
+function draw_text(gr, text, font, color, x, y, w, h) {
+    if (g_jsp3) {
+        gr.WriteText(text, font, color, x, y, w, h);
+        return;
+    }
+    gr.GdiDrawText(text, font, color, x, y, w, h, 0);
+}
+
 function on_paint(gr) {
     var w = window.Width;
     var h = window.Height;
-    gr.Clear(RGB(20, 20, 26));
+    if (g_jsp3) {
+        gr.Clear(RGB(20, 20, 26));
+    } else {
+        gr.FillSolidRect(0, 0, w, h, RGB(20, 20, 26));
+    }
 
-    if (!engine || !engine.IsEnabled) {
-        gr.WriteText("Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    if (!engine || !engine.IsEnabled()) {
+        draw_text(gr, "Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }
 
     engine.SetPanelType("playlist");
-
-    gr.WriteText("playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
-    gr.WriteText(_("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
-    gr.WriteText(_("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
+    draw_text(gr, "playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    draw_text(gr, _("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
+    draw_text(gr, _("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
 }
 
 function on_mouse_lbtn_up(x, y) {

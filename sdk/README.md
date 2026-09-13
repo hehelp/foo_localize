@@ -5,7 +5,7 @@
 | 文件 | 说明 |
 | --- | --- |
 | [`foo_localize_api.h`](foo_localize_api.h) | C++ 公开接口：`localize_api`、`localize_notify` |
-| [`foo_localize.js`](foo_localize.js) | JScript Panel 3 示例（`WriteText`，与快乐歌词相同画法） |
+| [`foo_localize.js`](foo_localize.js) | JScript Panel 3 / JSplitter 示例（自动选 `WriteText` 或 `GdiDrawText`） |
 | [`sample/`](sample/) | 可编译的 C++ 示例插件 |
 
 运行时若用户没装 foo_localize，`localize_api::tryGet` 返回 false，调用方应继续用原文。
@@ -69,19 +69,23 @@ FB2K_SERVICE_FACTORY(my_localize_notify);
 
 完整 C++ 示例与编译说明见 [`sample/README.md`](sample/README.md)。
 
-## JS 面板（Windows，JScript Panel 3）
+## JS 面板（Windows）
 
-把 [`foo_localize.js`](foo_localize.js) 整段贴进 JScript Panel 3.4+。画字用 `gr.WriteText`，字体是 `JSON.stringify({Name, Size})`，颜色用 `RGB()`。没有 `GdiDrawText` / `DrawString` / `gdi.Font`。
+把 [`foo_localize.js`](foo_localize.js) 整段贴进 JScript Panel 3.4+ 或 JSplitter。COM 方法一律带括号。启动时会在控制台自检接口（`ok` / `FAIL`）。JSP3 走 `gr.WriteText`；JSplitter / SMP 走 `gr.GdiDrawText`。
 
 ```javascript
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
-} catch (e) {}
+} catch (e) {
+    try {
+        console.log("FooLocalize FAIL: " + e.message);
+    } catch (ignored) {}
+}
 
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 ```
 
-未安装组件时 `engine` 为 `null`，`_()` 回原文。说明见 [docs/api.md](../docs/api.md)。
+未安装组件时 `engine` 为 `null`，`_()` 回原文。自检细节见脚本初始化段。说明见 [docs/api.md](../docs/api.md)。

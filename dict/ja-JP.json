@@ -2079,5 +2079,282 @@
   "Simple Media Library search": "簡易メディアライブラリ検索",
   "Spectrogram visualization.": "スペクトログラム表示。",
   "Spectrum visualization.": "スペクトラム表示。",
-  "VU meter visualization.": "VU メーター表示。"
+  "VU meter visualization.": "VU メーター表示。",
+  "Live layout editing": "ライブレイアウト編集",
+  " Add Files": "ファイルを追加",
+  " Auto-hide Sidebar": "サイドバーを自動的に隠す",
+  " Blend Color Overlay": "カラーオーバーレイを混ぜる",
+  " Blurred Cover Background": "ぼかしたカバー背景",
+  " Classic Three Buttons": "クラシック3ボタン",
+  " Close Context Menu": "コンテキストメニューを閉じる",
+  " Controlbar at Bottom": "下部のコントロールバー",
+  " Detailed settings (Playback/Interface/Spectrum)": "詳細設定（再生/インターフェイス/スペクトラム）",
+  " Global search": "グローバル検索",
+  " Grain Texture": "粒状テクスチャ",
+  " LED Dot Matrix Style": "LEDドットマトリクス",
+  " Library browsing (Folder/Artist/Genre)": "ライブラリ閲覧（フォルダー/アーティスト/ジャンル）",
+  " Mute Toggle": "ミュート切替",
+  " Play All": "すべて再生",
+  " Play Queue": "再生キュー",
+  " Play/Pause": "再生/一時停止",
+  " Playlist (virtual scrolling + album grouping + grid view)": "プレイリスト（仮想スクロール＋アルバムグループ＋グリッド）",
+  " Previous / Next": "前へ / 次へ",
+  " Queue management": "キュー管理",
+  " Show Software Name": "ソフト名を表示",
+  " Show Spectrum in Controlbar": "コントロールバーにスペクトラムを表示",
+  " Show Theme Name": "テーマ名を表示",
+  " Use Native Main Menu": "ネイティブのメインメニューを使う",
+  " Volume Up/Down": "音量を上げる/下げる",
+  "(Unknown Album)": "（不明なアルバム）",
+  "+ Add Folder": "+フォルダーを追加",
+  "☐ Select All": "☐ すべて選択",
+  "♪ Loading lyrics…": "♪ 歌詞を読み込み中…",
+  "♪ No lyrics": "♪ 歌詞なし",
+  "0 Albums": "0 アルバム",
+  "0 albums": "0 アルバム",
+  "0 Tracks": "0 トラック",
+  "3 New Hit Songs from Bright Eyes": "",
+  "Acknowledgements": "謝辞",
+  "Alegria": "",
+  "Antti Martikainen": "",
+  "Automatically fetched from Last.fm when track changes": "曲が変わると Last.fm から自動取得",
+  "Background Effects": "背景効果",
+  "Bright Eyes": "",
+  "Cirque du Soleil": "",
+  "Clear Queue": "キューをクリア",
+  "Controlbar": "コントロールバー",
+  "Cover Color": "カバーの色",
+  "Custom Color": "カスタムカラー",
+  "Dark Default": "ダーク（デフォルト）",
+  "Drunk Kid Catholic": "",
+  "Dual Bar Settings": "デュアルバー設定",
+  "Emerald Green": "エメラルドグリーン",
+  "Features": "機能",
+  "Fetch failed": "取得に失敗",
+  "Fetching artist bio…": "アーティスト紹介を取得中…",
+  "foobar2000 WebView2 Modern Theme": "foobar2000 WebView2 モダンテーマ",
+  "Icare": "",
+  "Intensity: ": "強度: ",
+  "Interface Brightness": "インターフェイスの明るさ",
+  "Light Day": "ライトデイ",
+  "Loading directories...": "ディレクトリを読み込み中...",
+  "Media library has no root directories": "メディアライブラリにルートフォルダーがありません",
+  "Melancholie und Sturmflut (Bonus Tracks Edition)": "",
+  "No artist bio available": "アーティスト紹介はありません",
+  "Playback Settings": "再生設定",
+  "Queue is empty": "キューは空です",
+  "Settings": "設定",
+  "Shortcuts": "ショートカット",
+  "Space": "",
+  "System Info": "システム情報",
+  "Tech Stack": "技術スタック",
+  "Thanks to @Asion for guidance and community: QQ Group 11675361": "@Asion の案内とコミュニティ（QQ グループ 11675361）に感謝",
+  "Thanks to @TaoSha for the generous help!": "@TaoSha の惜しみない支援に感謝！",
+  "Thanks to foo_ui_webview2 developer @Nereafantasia for their dedication and support!": "foo_ui_webview2 開発者 @Nereafantasia の尽力と支援に感謝！",
+  "The Last Chronicle": "",
+  "Theme loaded": "テーマを読み込みました",
+  "Titlebar": "タイトルバー",
+  "Warm Retro": "ウォームレトロ",
+  "Spectrum Bands:\n            ": "スペクトル帯：",
+  "Spectrum Color Source:\n            ": "スペクトルの色ソース：",
+  "Spectrum Base Color:\n            ": "スペクトルの基本色：",
+  "Spectrum Opacity:\n            ": "スペクトルの不透明度：",
+  "Text Brightness:\n            ": "テキストの明るさ：",
+  "Background Brightness:\n            ": "背景の明るさ：",
+  "Zoom Scale:\n            ": "ズーム倍率：",
+  "Color Theme:\n            ": "カラーテーマ：",
+  "Blend Color:\n            ": "ブレンドカラー：",
+  "Blend Opacity:\n            ": "ブレンド不透明度：",
+  "Copy name": "名前をコピー",
+  "&Copy name": "名前をコピー(&C)",
+  "foobar2000 WebView2 Theme": "foobar2000 WebView2 テーマ",
+  " Foobar2000 Now Playing (Classic/Sidebar/Immersive/Lyrics/Rotating CD - 5 layouts)": "Foobar2000 再生中（クラシック/サイドバー/没入/歌詞/回転 CD — 5 レイアウト）",
+  "Search library: tracks, artists, albums...": "ライブラリを検索: トラック、アーティスト、アルバム...",
+  "Maximize": "最大化",
+  "Cover": "カバー",
+  "System Settings": "システム設定",
+  "Classic": "クラシック",
+  "Sidebar": "サイドバー",
+  "Immersive": "没入",
+  "Lyrics": "歌詞",
+  "Rotating CD": "回転 CD",
+  "Left Position": "左側",
+  "Right Position": "右側",
+  "Show Info": "情報を表示",
+  "Show Lyrics": "歌詞を表示",
+  "Cover/CD": "カバー/CD",
+  "Loop Mode": "ループモード",
+  "Grid View": "グリッド表示",
+  "List View": "リスト表示",
+  "Swap Left/Right": "左右を入れ替え",
+  "Swap Top/Bottom": "上下を入れ替え",
+  "Sequential": "順次",
+  "<a>Get more components</a>n<a>Why are some components grayed out?</a>": {
+    "__default__": "<a>他のコンポーネントを入手</a>n<a>一部のコンポーネントが灰色なのはなぜ？</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "<a>Syntax help</a>": {
+    "__default__": "<a>構文ヘルプ</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Media library not enabled\nPlease configure media library in foobar2000": "メディアライブラリが無効です\nfoobar2000 でメディアライブラリを設定してください",
+  "FooLocalizeJsTest": "",
+  "&Reload": "再読み込み(&R)",
+  "&Edit panel script...": "パネルスクリプトを編集(&E)...",
+  "&Panel properties...": "パネルのプロパティ(&P)...",
+  "&Open component folder": "コンポーネントフォルダーを開く(&O)",
+  "&Open documentation": "ドキュメントを開く(&O)",
+  "&Panel list": "パネル一覧(&P)",
+  "Pseudotransparency": "疑似透明",
+  "Caption": "キャプション",
+  "Height": "高さ",
+  "Script": "スクリプト",
+  "Temporary file": "一時ファイル",
+  "Temporary file *": "一時ファイル *",
+  "Presets": "プリセット",
+  "WSH Panel Mod": "",
+  "Add panel": "パネルを追加",
+  "Splitters": "スプリッター",
+  "JSplitter": "",
+  "Reload": "再読み込み",
+  "Edit properties...": "プロパティを編集...",
+  "Clear properties": "プロパティをクリア",
+  "JScript Panel 3": "",
+  "Turn the Dynamic Multi-Lang Engine on or off": "ダイナミック多言語エンジンのオン/オフ",
+  "Requires Multi-Lang Engine; replaces text when string tables and dialog resources load (Windows only; independent of menu/dialog/content scopes)": "多言語エンジンが必要。文字列表とダイアログ資源の読み込み時に置換（Windows のみ。メニュー/ダイアログ/内容の範囲とは独立）",
+  "Translate main and context menus (most stable)": "メインメニューとコンテキストメニューを翻訳（最も安定）",
+  "Translates the Default UI owner-drawn menu bar; turn off if preference controls that share menu strings ghost (Windows only)": "Default UI のオーナードローメニューバーを翻訳。メニュー文字列を共有する設定コントロールが二重表示になる場合はオフ（Windows のみ）",
+  "Translate preferences, dialogs, and window text (may ghost)": "設定、ダイアログ、ウィンドウテキストを翻訳（二重表示の可能性）",
+  "Translate text on playlist, library, and similar panels": "プレイリスト、ライブラリなどのパネル上のテキストを翻訳",
+  "Collect untranslated English strings into harvest.txt": "未翻訳の英文を harvest.txt に収集",
+  "Open the language pack manager": "言語パック管理を開く",
+  "&Samples": {
+    "__default__": "サンプル(&S)",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Script source": {
+    "__default__": "スクリプトのソース",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Editor": {
+    "__default__": "エディター",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "JSplitter Configuration": {
+    "__default__": "JSplitter の設定",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel name:": {
+    "__default__": "パネル名:",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "No edge": {
+    "__default__": "縁なし",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sunken edge": {
+    "__default__": "沈んだ縁",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Grey edge": {
+    "__default__": "灰色の縁",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Use pseudo-transparency": {
+    "__default__": "疑似透明を使う",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sample": {
+    "__default__": "サンプル",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "In-memory": {
+    "__default__": "メモリ内",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package": {
+    "__default__": "パッケージ",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package manager": {
+    "__default__": "パッケージマネージャー",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Edit script...": {
+    "__default__": "スクリプトを編集...",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel list": {
+    "__default__": "パネル一覧",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Foobar2000 Player": ""
 }

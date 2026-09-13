@@ -2079,5 +2079,282 @@
   "Simple Media Library search": "Einfache Mediathek-Suche",
   "Spectrogram visualization.": "Spektrogramm-Visualisierung.",
   "Spectrum visualization.": "Spektrum-Visualisierung.",
-  "VU meter visualization.": "VU-Meter-Visualisierung."
+  "VU meter visualization.": "VU-Meter-Visualisierung.",
+  "Live layout editing": "Live-Layout-Bearbeitung",
+  " Add Files": "Dateien hinzufügen",
+  " Auto-hide Sidebar": "Seitenleiste automatisch ausblenden",
+  " Blend Color Overlay": "Farbüberlagerung mischen",
+  " Blurred Cover Background": "Unscharfer Cover-Hintergrund",
+  " Classic Three Buttons": "Klassische drei Tasten",
+  " Close Context Menu": "Kontextmenü schließen",
+  " Controlbar at Bottom": "Steuerleiste unten",
+  " Detailed settings (Playback/Interface/Spectrum)": "Detaileinstellungen (Wiedergabe/Oberfläche/Spektrum)",
+  " Global search": "Globale Suche",
+  " Grain Texture": "Körnige Textur",
+  " LED Dot Matrix Style": "LED-Punktmatrix",
+  " Library browsing (Folder/Artist/Genre)": "Mediathek durchsuchen (Ordner/Interpret/Genre)",
+  " Mute Toggle": "Stummschaltung umschalten",
+  " Play All": "Alles wiedergeben",
+  " Play Queue": "Wiedergabewarteschlange",
+  " Play/Pause": "Wiedergabe/Pause",
+  " Playlist (virtual scrolling + album grouping + grid view)": "Wiedergabeliste (virtuelles Scrollen + Albumgruppen + Raster)",
+  " Previous / Next": "Zurück / Weiter",
+  " Queue management": "Warteschlangenverwaltung",
+  " Show Software Name": "Programmnamen anzeigen",
+  " Show Spectrum in Controlbar": "Spektrum in der Steuerleiste anzeigen",
+  " Show Theme Name": "Themennamen anzeigen",
+  " Use Native Main Menu": "Natives Hauptmenü verwenden",
+  " Volume Up/Down": "Lauter/leiser",
+  "(Unknown Album)": "(Unbekanntes Album)",
+  "+ Add Folder": "+ Ordner hinzufügen",
+  "☐ Select All": "☐ Alles auswählen",
+  "♪ Loading lyrics…": "♪ Liedtext wird geladen…",
+  "♪ No lyrics": "♪ Kein Liedtext",
+  "0 Albums": "0 Alben",
+  "0 albums": "0 Alben",
+  "0 Tracks": "0 Titel",
+  "3 New Hit Songs from Bright Eyes": "",
+  "Acknowledgements": "Danksagungen",
+  "Alegria": "",
+  "Antti Martikainen": "",
+  "Automatically fetched from Last.fm when track changes": "Wird bei Titelwechsel automatisch von Last.fm geholt",
+  "Background Effects": "Hintergrundeffekte",
+  "Bright Eyes": "",
+  "Cirque du Soleil": "",
+  "Clear Queue": "Warteschlange leeren",
+  "Controlbar": "Steuerleiste",
+  "Cover Color": "Coverfarbe",
+  "Custom Color": "Eigene Farbe",
+  "Dark Default": "Dunkel (Standard)",
+  "Drunk Kid Catholic": "",
+  "Dual Bar Settings": "Einstellungen der Doppel-Leiste",
+  "Emerald Green": "Smaragdgrün",
+  "Features": "Funktionen",
+  "Fetch failed": "Abrufen fehlgeschlagen",
+  "Fetching artist bio…": "Künstlerbiografie wird geladen…",
+  "foobar2000 WebView2 Modern Theme": "Modernes foobar2000-WebView2-Thema",
+  "Icare": "",
+  "Intensity: ": "Intensität: ",
+  "Interface Brightness": "Helligkeit der Oberfläche",
+  "Light Day": "Heller Tag",
+  "Loading directories...": "Verzeichnisse werden geladen...",
+  "Media library has no root directories": "Die Mediathek hat keine Stammordner",
+  "Melancholie und Sturmflut (Bonus Tracks Edition)": "",
+  "No artist bio available": "Keine Künstlerbiografie verfügbar",
+  "Playback Settings": "Wiedergabeeinstellungen",
+  "Queue is empty": "Die Warteschlange ist leer",
+  "Settings": "Einstellungen",
+  "Shortcuts": "Tastenkürzel",
+  "Space": "",
+  "System Info": "Systeminformationen",
+  "Tech Stack": "Technikstack",
+  "Thanks to @Asion for guidance and community: QQ Group 11675361": "Dank an @Asion für Hilfe und Community: QQ-Gruppe 11675361",
+  "Thanks to @TaoSha for the generous help!": "Dank an @TaoSha für die großzügige Hilfe!",
+  "Thanks to foo_ui_webview2 developer @Nereafantasia for their dedication and support!": "Dank an foo_ui_webview2-Entwickler @Nereafantasia für Einsatz und Unterstützung!",
+  "The Last Chronicle": "",
+  "Theme loaded": "Thema geladen",
+  "Titlebar": "Titelleiste",
+  "Warm Retro": "Warmes Retro",
+  "Spectrum Bands:\n            ": "Spektrumbänder:",
+  "Spectrum Color Source:\n            ": "Farbquelle des Spektrums:",
+  "Spectrum Base Color:\n            ": "Grundfarbe des Spektrums:",
+  "Spectrum Opacity:\n            ": "Deckkraft des Spektrums:",
+  "Text Brightness:\n            ": "Texhelligkeit:",
+  "Background Brightness:\n            ": "Hintergrundhelligkeit:",
+  "Zoom Scale:\n            ": "Zoomstufe:",
+  "Color Theme:\n            ": "Farbthema:",
+  "Blend Color:\n            ": "Mischfarbe:",
+  "Blend Opacity:\n            ": "Mischdeckkraft:",
+  "Copy name": "Namen kopieren",
+  "&Copy name": "Namen kopieren(&C)",
+  "foobar2000 WebView2 Theme": "foobar2000-WebView2-Thema",
+  " Foobar2000 Now Playing (Classic/Sidebar/Immersive/Lyrics/Rotating CD - 5 layouts)": "Foobar2000 Wiedergabe (Klassisch/Seitenleiste/Immersiv/Text/Drehende CD – 5 Layouts)",
+  "Search library: tracks, artists, albums...": "Mediathek durchsuchen: Titel, Interpreten, Alben...",
+  "Maximize": "Maximieren",
+  "Cover": "Cover",
+  "System Settings": "Systemeinstellungen",
+  "Classic": "Klassisch",
+  "Sidebar": "Seitenleiste",
+  "Immersive": "Immersiv",
+  "Lyrics": "Liedtext",
+  "Rotating CD": "Drehende CD",
+  "Left Position": "Linke Position",
+  "Right Position": "Rechte Position",
+  "Show Info": "Infos anzeigen",
+  "Show Lyrics": "Liedtext anzeigen",
+  "Cover/CD": "Cover/CD",
+  "Loop Mode": "Wiederholmodus",
+  "Grid View": "Rasteransicht",
+  "List View": "Listenansicht",
+  "Swap Left/Right": "Links/rechts tauschen",
+  "Swap Top/Bottom": "Oben/unten tauschen",
+  "Sequential": "Der Reihe nach",
+  "<a>Get more components</a>n<a>Why are some components grayed out?</a>": {
+    "__default__": "<a>Weitere Komponenten holen</a>n<a>Warum sind einige Komponenten ausgegraut?</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "<a>Syntax help</a>": {
+    "__default__": "<a>Syntaxhilfe</a>",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Media library not enabled\nPlease configure media library in foobar2000": "Mediathek nicht aktiviert\nBitte die Mediathek in foobar2000 einrichten",
+  "FooLocalizeJsTest": "",
+  "&Reload": "Neu laden(&R)",
+  "&Edit panel script...": "Panel-Skript bearbeiten(&E)...",
+  "&Panel properties...": "Paneleigenschaften(&P)...",
+  "&Open component folder": "Komponentenordner öffnen(&O)",
+  "&Open documentation": "Dokumentation öffnen(&O)",
+  "&Panel list": "Panelliste(&P)",
+  "Pseudotransparency": "Pseudotransparenz",
+  "Caption": "Beschriftung",
+  "Height": "Höhe",
+  "Script": "Skript",
+  "Temporary file": "Temporäre Datei",
+  "Temporary file *": "Temporäre Datei *",
+  "Presets": "Voreinstellungen",
+  "WSH Panel Mod": "",
+  "Add panel": "Panel hinzufügen",
+  "Splitters": "Teiler",
+  "JSplitter": "",
+  "Reload": "Neu laden",
+  "Edit properties...": "Eigenschaften bearbeiten...",
+  "Clear properties": "Eigenschaften löschen",
+  "JScript Panel 3": "",
+  "Turn the Dynamic Multi-Lang Engine on or off": "Die dynamische Mehrsprachen-Engine ein- oder ausschalten",
+  "Requires Multi-Lang Engine; replaces text when string tables and dialog resources load (Windows only; independent of menu/dialog/content scopes)": "Benötigt die Engine; ersetzt Text beim Laden von Stringtabellen und Dialogressourcen (nur Windows; unabhängig von Menü-/Dialog-/Inhaltsbereichen)",
+  "Translate main and context menus (most stable)": "Haupt- und Kontextmenüs übersetzen (am stabilsten)",
+  "Translates the Default UI owner-drawn menu bar; turn off if preference controls that share menu strings ghost (Windows only)": "Übersetzt die vom Default UI gezeichnete Menüleiste; ausschalten, wenn Einstellungssteuerungen mit denselben Menütexten geistern (nur Windows)",
+  "Translate preferences, dialogs, and window text (may ghost)": "Einstellungen, Dialoge und Fenstertext übersetzen (kann geistern)",
+  "Translate text on playlist, library, and similar panels": "Text auf Wiedergabeliste, Mediathek und ähnlichen Panels übersetzen",
+  "Collect untranslated English strings into harvest.txt": "Unübersetzte englische Zeichenfolgen in harvest.txt sammeln",
+  "Open the language pack manager": "Den Sprachpaket-Manager öffnen",
+  "&Samples": {
+    "__default__": "Beispiele(&S)",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Script source": {
+    "__default__": "Skriptquelle",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Editor": {
+    "__default__": "Editor",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "JSplitter Configuration": {
+    "__default__": "JSplitter-Konfiguration",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel name:": {
+    "__default__": "Panelname:",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "No edge": {
+    "__default__": "Kein Rand",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sunken edge": {
+    "__default__": "Eingelassener Rand",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Grey edge": {
+    "__default__": "Grauer Rand",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Use pseudo-transparency": {
+    "__default__": "Pseudotransparenz verwenden",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Sample": {
+    "__default__": "Beispiel",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "In-memory": {
+    "__default__": "Im Speicher",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package": {
+    "__default__": "Paket",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Package manager": {
+    "__default__": "Paketmanager",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Edit script...": {
+    "__default__": "Skript bearbeiten...",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Panel list": {
+    "__default__": "Panelliste",
+    "when": [
+      {
+        "class": "Static"
+      }
+    ]
+  },
+  "Foobar2000 Player": ""
 }
