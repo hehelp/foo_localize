@@ -1,14 +1,20 @@
-<p align="left"><b>English</b> · <a href="README_zh.md">中文</a></p>
+**English** · [中文](README_zh.md)
 
 # Dynamic Multilingual Engine (foo_localize)
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.5.2`.
+Component version: `1.5.3`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+
+
+### 1.5.3 (2026-09-13)
+
+- Fixed a false positive in the word lookup function: "Klyrics" no longer incorrectly matches "Klyrics\nProduct version ..."
 
 
 
@@ -18,11 +24,15 @@ This repository hosts **release notes** and open language-pack JSON. The compone
 - Windows: `EnableTranslation`/`DisableTranslation` only control `Translate()` lookup. The dictionary works even when the plugin switch is off.
 - Windows: `IsPluginEnabled()` reads the user checkbox. `Skip()` no longer blocks `Translate()`.
 
+
+
 ### 1.5.1 (2026-09-13)
 
 - Windows: JSplitter / Spider Monkey Panel can create `FooLocalize.Engine` (type information is provided; `GetTypeInfo` no longer fails).
 - Windows: The JS sample works on both JScript Panel 3 and JSplitter. Call COM members as methods, e.g. `engine.IsEnabled()`, `engine.Translate("Play")`.
 - Windows: A JS panel’s `SetPanelType` no longer leaks onto other windows, which caused ghosted radio-button labels on already-localized dialogs such as JSplitter Configuration.
+
+
 
 ### 1.5.0 (2026-09-13)
 
@@ -153,7 +163,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.5.2.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.5.3.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 
@@ -224,8 +234,8 @@ Enable the engine, the translation scopes (including the DUI main menu), Develop
 
 ## API for other components
 
-C++ components: the header and a buildable sample live in [`sdk/`](sdk/README.md). Copy [`sdk/foo_localize_api.h`](sdk/foo_localize_api.h) into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: [`sdk/sample/`](sdk/sample/README.md).
+C++ components: the header and a buildable sample live in `[sdk/](sdk/README.md)`. Copy `[sdk/foo_localize_api.h](sdk/foo_localize_api.h)` into your project and call `localize_api::tryGet`. Implement `localize_notify` and register it with `FB2K_SERVICE_FACTORY` to hear language changes. Full sample component: `[sdk/sample/](sdk/sample/README.md)`.
 
-JScript Panel 3 (Windows only): paste [`sdk/foo_localize.js`](sdk/foo_localize.js) into a panel. Use `new ActiveXObject("FooLocalize.Engine")` and `gr.WriteText` (same as Klyrics). If the component is not installed, catch the error and keep English.
+JScript Panel 3 (Windows only): paste `[sdk/foo_localize.js](sdk/foo_localize.js)` into a panel. Use `new ActiveXObject("FooLocalize.Engine")` and `gr.WriteText` (same as Klyrics). If the component is not installed, catch the error and keep English.
 
 See [Component API](docs/api.en.md). 中文：[docs/api.md](docs/api.md).
