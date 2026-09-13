@@ -5,6 +5,7 @@ English: [api.en.md](api.en.md)。
 接口头文件和可编译示例都在 [`../sdk/`](../sdk/README.md)。
 
 - 头文件：[`../sdk/foo_localize_api.h`](../sdk/foo_localize_api.h)
+- JScript Panel 3 示例：[`../sdk/foo_localize.js`](../sdk/foo_localize.js)
 - 示例插件：[`../sdk/sample/`](../sdk/sample/README.md)
 
 把 `foo_localize_api.h` 拷进你的工程即可，**不要**链接任何 foo_localize 库。运行时若没装引擎，`localize_api::tryGet` 返回 false，调用方应继续用原文。
