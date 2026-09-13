@@ -127,11 +127,20 @@ GUIDs:
 
 ## JS panels (Windows)
 
-JScript Panel / Spider Monkey Panel `gr.DrawString` does not go through system hooks and cannot use the C++ service above. Use COM: `FooLocalize.Engine`. There is no COM API on macOS.
+JScript Panel / Spider Monkey Panel custom drawing cannot use the C++ service above. Use COM: `FooLocalize.Engine`. There is no COM API on macOS.
 
 Each `ActiveXObject` instance has its own panel state (`Skip`, `SetPanelType`, `SetContextType`). Create it once globally; do not `new` it inside `on_paint`.
 
-`Translate` returns the source when the master switch is off, the dictionary misses, or this instance is inside `Skip()`. Do not pass paths or track titles. Wrap `gr.DrawString` with `Translate` yourself. `gr.GdiDrawText` goes through `DrawTextW` hooks and follows `Skip` / `SetPanelType` / `SetContextType` plus dictionary rules.
+`Translate` returns the source when the master switch is off, the dictionary misses, or this instance is inside `Skip()`. Do not pass paths or track titles.
+
+Drawing APIs differ by panel component:
+
+| Component | Draw text | Font | GDI hook |
+| --- | --- | --- | --- |
+| **JScript Panel 3** | `gr.WriteText(text, font, color, x, y, w, h)` | `JSON.stringify({Name:"Segoe UI", Size:16})` | No; wrap with `Translate` |
+| Spider Monkey Panel / JSP 2 | `gr.GdiDrawText` / `gr.DrawString` | `gdi.Font(...)` | Only `GdiDrawText` goes through `DrawTextW` |
+
+JScript Panel 3.4 has no `GdiDrawText` / `DrawString` / `gdi.Font`. Use the same style as the Klyrics panel.
 
 `type` for `SetPanelType` / `SetContextType` is case-insensitive:
 
@@ -153,12 +162,18 @@ try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
+function RGB(r, g, b) {
+    return 0xff000000 | (r << 16) | (g << 8) | b;
+}
+
+var font = JSON.stringify({Name: "Segoe UI", Size: 16});
+
 function _(text) {
     return engine ? engine.Translate(text) : text;
 }
 ```
 
-If the component is not installed or COM is not registered, `new ActiveXObject` throws and `engine` stays `null`. Guard every call with `engine`.
+If the component is not installed or COM is not registered, `new ActiveXObject` throws and `engine` stays `null`. Guard every call with `engine`. On JSP3 draw with `gr.WriteText`, a JSON font string, and `RGB()`, same as the Klyrics panel.
 
 ---
 
@@ -179,7 +194,7 @@ var label = engine.Translate("Play");
 var byHwnd = engine.Translate("Play", window.ID);
 var header = engine.Translate("Title", "SysHeader32");
 
-gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
+gr.WriteText(engine.Translate("Play", window.ID), font, color, 0, 0, w, h);
 ```
 
 ---
@@ -255,7 +270,7 @@ Declare the **default** translation scope for this panel. Maps to the component 
 | --- | --- |
 | **Parameters** | `type` (String, required): `menu` / `dialog` / `content` / `playlist` / `library`. |
 | **Returns** | `Boolean`. `true` if recognized; `false` if the string is unknown (state unchanged). |
-| **Notes** | Affects `GdiDrawText` hooks for this `engine` instance only. Call again at the start of every `on_paint` so the current HWND is bound. |
+| **Notes** | Affects GDI hooks for this `engine` instance (SMP `GdiDrawText`). JSP3 `WriteText` is not hooked; use `Translate`. Call again at the start of every `on_paint` so the current HWND is bound. |
 
 ```javascript
 function on_paint(gr) {
@@ -263,7 +278,7 @@ function on_paint(gr) {
         return;
     }
     engine.SetPanelType("playlist");
-    gr.GdiDrawText("Play", font, color, 0, 0, w, h, 0);
+    gr.WriteText(engine.Translate("Play"), font, color, 0, 0, w, h);
 }
 ```
 
@@ -277,23 +292,23 @@ Temporarily override the scope used by later draws, until cleared or replaced. `
 | --- | --- | --- |
 | **Parameters** | `type` (String, required): same values as `SetPanelType`. | `type` (String, optional). Omit to always clear. If passed: clear only when it matches the current context; otherwise no-op. |
 | **Returns** | `Boolean`. `true` if recognized; `false` if `type` is unknown. | `Boolean`. `true` if cleared; `false` if the given `type` does not match the current context. |
-| **Notes** | Later `GdiDrawText` calls use this scope to decide whether to translate. | After clear, the panel falls back to `SetPanelType`. |
+| **Notes** | Later GDI hooks use this scope to decide whether to translate. On JSP3 keep calling `Translate`. | After clear, the panel falls back to `SetPanelType`. |
 
 ```javascript
 engine.SetPanelType("playlist");
 
 engine.SetContextType("menu");
-gr.GdiDrawText("Settings", font, color, 0, 0, w, rowH, 0);
+gr.WriteText(engine.Translate("Settings"), font, color, 0, 0, w, rowH);
 engine.ClearContextType("menu");
 
-gr.GdiDrawText("Play", font, color, 0, rowH, w, rowH, 0);
+gr.WriteText(engine.Translate("Play"), font, color, 0, rowH, w, rowH);
 ```
 
 ---
 
 ### `Skip()` / `Continue()`
 
-Skip / resume translation for **this instance**. After `Skip`, both `Translate()` and `GdiDrawText` → `DrawTextW` hooks on this panel leave strings unchanged until `Continue()`.
+Skip / resume translation for **this instance**. After `Skip`, `Translate()` and SMP `GdiDrawText` → `DrawTextW` hooks leave strings unchanged until `Continue()`. JSP3 `WriteText` is not hooked; omit `Translate` for text that should stay original.
 
 | | |
 | --- | --- |
@@ -303,7 +318,7 @@ Skip / resume translation for **this instance**. After `Skip`, both `Translate()
 
 ```javascript
 engine.Skip();
-gr.GdiDrawText(playlistTitle, font, color, 0, 0, w, rowH, 0);
+gr.WriteText(playlistTitle, font, color, 0, 0, w, rowH);
 engine.Continue();
 ```
 
@@ -369,37 +384,40 @@ engine.ModifyTranslation("Play", "播放", "zh-CN");
 
 ---
 
-### Full `on_paint` demo
+### Full `on_paint` demo (JScript Panel 3, same drawing style as Klyrics)
 
 ```javascript
+function RGB(r, g, b) {
+    return 0xff000000 | (r << 16) | (g << 8) | b;
+}
+
 var engine = null;
 try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
-var font = gdi.Font("Segoe UI", 12, 0);
-var color = 0xffffffff;
-var playlist = "playlist title";
-var w = 200;
-var rowH = 24;
+var g_font = JSON.stringify({Name: "Segoe UI", Size: 16});
+var g_font_hi = JSON.stringify({Name: "Segoe UI", Size: 22, Weight: 700});
+
+function _(text) {
+    return engine ? engine.Translate(text) : text;
+}
 
 function on_paint(gr) {
+    var w = window.Width;
+    var h = window.Height;
+    gr.Clear(RGB(20, 20, 26));
+
     if (!engine || !engine.IsEnabled) {
-        gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
+        gr.WriteText("Play", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
         return;
     }
 
     engine.SetPanelType("playlist");
 
-    engine.Skip();
-    gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
-    engine.Continue();
-
-    engine.SetContextType("menu");
-    gr.GdiDrawText("Settings", font, color, 0, rowH, w, rowH, 0);
-    engine.ClearContextType("menu");
-
-    gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, rowH * 2, w, rowH);
+    gr.WriteText("playlist title", g_font, RGB(160, 160, 160), 10, 10, w - 20, 24);
+    gr.WriteText(_("Settings"), g_font, RGB(180, 180, 190), 10, 40, w - 20, 24);
+    gr.WriteText(_("Play"), g_font_hi, RGB(255, 220, 80), 10, 70, w - 20, 28);
 }
 
 function on_mouse_lbtn_up(x, y) {

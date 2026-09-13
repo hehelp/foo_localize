@@ -220,7 +220,7 @@ Use `when` when the **same source needs different translations**:
 - Anything else that passes uses `__default__` 「查看」.
 - JS / C++ with no site use 「查看」 only.
 
-JS panels need `Translate("Play", window.ID)` or `Translate("Title", "SysHeader32")` for these filters. `gr.GdiDrawText` goes through system hooks and gets the current HWND automatically.
+JS panels need `Translate("Play", window.ID)` or `Translate("Title", "SysHeader32")` for these filters. On JScript Panel 3 use `gr.WriteText` and wrap with `Translate`. SMP `gr.GdiDrawText` goes through system hooks and gets the current HWND automatically.
 
 ## Harvesting missing strings
 
