@@ -143,6 +143,8 @@ JScript Panel / Spider Monkey Panel 的 `gr.DrawString` 不走系统钩子，也
 
 建议在每次 `on_paint` 开头再调一次 `SetPanelType`，以便把当前 HWND 绑到这个实例。`Enable` / `Disable` / `SetLanguage` 会改全局 `cfg_var`，请只在用户明确操作时调用。
 
+JScript Panel 3.4 用的是旧版 JScript（ES3/ES5）。不要用 `let` / `const`、箭头函数、默认参数、对象方法简写。也不要把文档里的 `[, lang]` 抄进脚本，那不是合法语法。
+
 ### 创建实例
 
 ```javascript
@@ -307,7 +309,7 @@ engine.Continue();
 
 ---
 
-### `HasTranslation(text [, lang])`
+### `HasTranslation(text)` / `HasTranslation(text, lang)`
 
 查语言包里是否已有可用译文。
 
@@ -329,7 +331,7 @@ if (engine.HasTranslation("Play", "ja-JP")) {
 
 ---
 
-### `AddTranslation(text, translated [, lang])`
+### `AddTranslation(text, translated)` / `AddTranslation(text, translated, lang)`
 
 向语言包**新增**一条字符串词条，不覆盖已有键。
 
@@ -348,7 +350,7 @@ var addedJa = engine.AddTranslation("Settings", "設定", "ja-JP");
 
 ---
 
-### `ModifyTranslation(text, translated [, lang])`
+### `ModifyTranslation(text, translated)` / `ModifyTranslation(text, translated, lang)`
 
 覆盖或新增一条字符串词条。
 
@@ -375,6 +377,12 @@ try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
+var font = gdi.Font("Segoe UI", 12, 0);
+var color = 0xffffffff;
+var playlist = "playlist title";
+var w = 200;
+var rowH = 24;
+
 function on_paint(gr) {
     if (!engine || !engine.IsEnabled) {
         gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
@@ -394,13 +402,14 @@ function on_paint(gr) {
     gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, rowH * 2, w, rowH);
 }
 
-function on_user_add_term() {
+function on_mouse_lbtn_up(x, y) {
     if (!engine) {
         return;
     }
     if (!engine.HasTranslation("Settings")) {
-        engine.AddTranslation("Settings", "设置");
+        engine.AddTranslation("Settings", "Shezhi");
     }
-    engine.ModifyTranslation("Settings", "设置", "zh-CN");
+    engine.ModifyTranslation("Settings", "Shezhi", "zh-CN");
+    window.Repaint();
 }
 ```

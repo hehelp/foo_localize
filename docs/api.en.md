@@ -143,6 +143,8 @@ Each `ActiveXObject` instance has its own panel state (`Skip`, `SetPanelType`, `
 
 Call `SetPanelType` again at the start of every `on_paint` so the current HWND is bound to this instance. `Enable` / `Disable` / `SetLanguage` write global `cfg_var`s; call them only on an explicit user action.
 
+JScript Panel 3.4 uses legacy JScript (ES3/ES5). Do not use `let` / `const`, arrow functions, default parameters, or object-literal method shorthand. Do not paste `[, lang]` from the docs into a script; that is not valid syntax.
+
 ### Create the object
 
 ```javascript
@@ -307,7 +309,7 @@ engine.Continue();
 
 ---
 
-### `HasTranslation(text [, lang])`
+### `HasTranslation(text)` / `HasTranslation(text, lang)`
 
 Whether the pack already has a usable translation.
 
@@ -329,7 +331,7 @@ if (engine.HasTranslation("Play", "ja-JP")) {
 
 ---
 
-### `AddTranslation(text, translated [, lang])`
+### `AddTranslation(text, translated)` / `AddTranslation(text, translated, lang)`
 
 **Add** a string entry. Does not overwrite an existing key.
 
@@ -348,7 +350,7 @@ var addedJa = engine.AddTranslation("Settings", "設定", "ja-JP");
 
 ---
 
-### `ModifyTranslation(text, translated [, lang])`
+### `ModifyTranslation(text, translated)` / `ModifyTranslation(text, translated, lang)`
 
 Overwrite or insert a string entry.
 
@@ -375,6 +377,12 @@ try {
     engine = new ActiveXObject("FooLocalize.Engine");
 } catch (e) {}
 
+var font = gdi.Font("Segoe UI", 12, 0);
+var color = 0xffffffff;
+var playlist = "playlist title";
+var w = 200;
+var rowH = 24;
+
 function on_paint(gr) {
     if (!engine || !engine.IsEnabled) {
         gr.GdiDrawText(playlist, font, color, 0, 0, w, rowH, 0);
@@ -394,13 +402,14 @@ function on_paint(gr) {
     gr.DrawString(engine.Translate("Play", window.ID), font, color, 0, rowH * 2, w, rowH);
 }
 
-function on_user_add_term() {
+function on_mouse_lbtn_up(x, y) {
     if (!engine) {
         return;
     }
     if (!engine.HasTranslation("Settings")) {
-        engine.AddTranslation("Settings", "设置");
+        engine.AddTranslation("Settings", "Shezhi");
     }
-    engine.ModifyTranslation("Settings", "设置", "zh-CN");
+    engine.ModifyTranslation("Settings", "Shezhi", "zh-CN");
+    window.Repaint();
 }
 ```
