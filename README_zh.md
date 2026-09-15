@@ -12,15 +12,12 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 
 ### 1.5.4（2026-09-15）
 
-- Windows / macOS：通过 Zero Bus 提供 `plugin.localize`（需安装 [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)）；首选项新增「Zero Bus 服务」页
+- Windows / macOS：通过 Zero Bus 提供 翻译服务，服务名:`plugin.localize`（需安装 [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)）
 - Windows：不再翻译桌面歌词 / 浮窗 / 任务栏等歌词叠加窗口，避免把菜单词「Preferences」画进歌词
-
 
 ### 1.5.3（2026-09-13）
 
 - 修复查词的误判bug：「Klyrics」不再误中 「`Klyrics\nProduct version ...`」
-
-
 
 ### 1.5.2（2026-09-13）
 
@@ -28,15 +25,11 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 - Windows：`EnableTranslation`/`DisableTranslation` 只控制 `Translate()` 查词；插件关着也能查词典
 - Windows：`IsPluginEnabled()` 只读用户勾选；`Skip()` 不再挡住 `Translate()`
 
-
-
 ### 1.5.1（2026-09-13）
 
 - Windows：JSplitter / Spider Monkey Panel 可正常创建 `FooLocalize.Engine`（不再因缺少类型信息失败）
 - Windows：JS 示例同时支持 JScript Panel 3 与 JSplitter；请用方法调用，例如 `engine.IsEnabled()`、`engine.Translate("Play")`
 - Windows：修复 JS 面板声明范围后，其它已本地化对话框（如 JSplitter 配置）单选框文字重影
-
-
 
 ### 1.5.0（2026-09-13）
 
@@ -44,22 +37,16 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 - Windows：可翻译 WebView2 页面文字（精确匹配，默认关），含 placeholder / title / alt 与按钮 value
 - 升级后把内置语言包的新词条合并进已有 `foo-lang` 文件，不覆盖用户改过的译文
 
-
-
 ### 1.4.1（2026-09-06）
 
 - 语言包管理窗口：右键可分别复制原文、译文到剪贴板
 - 简中词典补充约 99 条（列头、Klyrics、可视化、Cover Art Archive 等），并同步到繁/日/俄/西/德/法
-
-
 
 ### 1.4.0（2026-09-06）
 
 - 在线翻译：可以在语言包管理窗口，使用在线翻译引擎，自动翻译原文
 - Windows / macOS：首选项可选在线翻译引擎（Google / 百度）并填写 AppID、密钥
 - macOS：语言包管理窗口与 Windows 对齐（预览、合并、改译文、在线翻译）
-
-
 
 ### 1.3.0（2026-09-05）
 
@@ -69,19 +56,13 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 - 简中词典补：Playing / Artist/album / Title / track artist / Track no
 - 语言包管理、DUI 开关与内容轨范围仅 Windows；macOS 行为与 1.2.2 相同
 
-
-
 ### 1.2.2（2026-09-04）
 
 - Windows x64：修复 1.2.1 误把几乎所有界面文本当成无效指针，导致运行时字符串和 Default UI 主菜单不翻译
 
-
-
 ### 1.2.1（2026-09-04）
 
 - Windows：修复其它插件弹出系统文件对话框时崩溃（`SetWindowTextW` 收到 `(LPWSTR)-1` 哨兵）
-
-
 
 ### 1.2.0（2026-09-04）
 
@@ -90,16 +71,12 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 - Windows：Default UI 顶栏启动即为译文，窗口不再为此抖动
 - 静态资源与 COM 仅 Windows；macOS 行为与 1.1.0 相同
 
-
-
 ### 1.1.0（2026-09-03）
 
 - 可分别开关：翻译菜单、翻译对话框、翻译播放列表和媒体库
 - 播放列表 / 媒体库列头可译；查词去掉零宽空格等格式符，并识别 `%year%` / `%length%`
 - Windows：主菜单按译文量宽；对话框不再英文叠中文；SysLink 链接文字可译
 - macOS：语言列表挂在 `查看 → 动态多语引擎` 下，与 Windows 一致
-
-
 
 ### 1.0.0（2026-09-02）
 
@@ -108,11 +85,7 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 - `查看 → 动态多语引擎 → 语言` 热切换；开发者模式把未译词条写入 `harvest.txt`
 - 内置简中、繁中、日、俄、西、德、法及英文模板；首次启动写入 `foo-lang`（不覆盖已有文件）
 
-
-
 ## 截图
-
-
 
 ### Windows
 
@@ -161,8 +134,6 @@ foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言
 | ------- | ----------------------------------- |
 | Windows | `%APPDATA%\foobar2000-v2\foo-lang\` |
 | macOS   | `~/Library/foobar2000-v2/foo-lang\` |
-
-
 
 
 ## 安装

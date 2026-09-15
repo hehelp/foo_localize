@@ -10,10 +10,13 @@ This repository hosts **release notes** and open language-pack JSON. The compone
 
 ## Updates
 
+
+
 ### 1.5.4 (2026-09-15)
 
-- Windows / macOS: Zero Bus service `plugin.localize` (requires [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)). New **Zero Bus** preferences page.
+- Windows / macOS: Translation service provided via Zero Bus; service name: plugin.localize (requires [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)). New **Zero Bus** preferences page.
 - Windows: lyric overlay windows (desktop / floating / taskbar) are no longer translated, so menu text such as Preferences is not drawn into lyrics.
+
 
 
 ### 1.5.3 (2026-09-13)
