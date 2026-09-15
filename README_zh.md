@@ -4,11 +4,17 @@
 
 foobar2000 运行时多语言组件。不改官方程序，用外置 JSON 语言包替换界面英文。换一份语言包即可切换简体、繁体、日、俄、西、德、法等，不限于中文。英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.5.3`。
+当前组件版本：`1.5.4`。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.5.4（2026-09-15）
+
+- Windows / macOS：通过 Zero Bus 提供 `plugin.localize`（需安装 [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)）；首选项新增「Zero Bus 服务」页
+- Windows：不再翻译桌面歌词 / 浮窗 / 任务栏等歌词叠加窗口，避免把菜单词「Preferences」画进歌词
+
 
 ### 1.5.3（2026-09-13）
 

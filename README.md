@@ -4,12 +4,16 @@
 
 A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
 
-Component version: `1.5.3`.
+Component version: `1.5.4`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
 
+### 1.5.4 (2026-09-15)
+
+- Windows / macOS: Zero Bus service `plugin.localize` (requires [foo_zero_bus](https://github.com/hehelp/foo_zero_bus)). New **Zero Bus** preferences page.
+- Windows: lyric overlay windows (desktop / floating / taskbar) are no longer translated, so menu text such as Preferences is not drawn into lyrics.
 
 
 ### 1.5.3 (2026-09-13)
