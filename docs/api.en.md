@@ -126,6 +126,21 @@ GUIDs:
 | `localize_api` | `{5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17}` |
 | `localize_notify` | `{C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}` |
 
+## Zero Bus (Windows / macOS)
+
+Turn on **Enable Zero Bus service** under **Dynamic Multilingual Engine → Zero Bus**, and install [`foo_zero_bus`](https://github.com/hehelp/foo_zero_bus). The component then registers **`plugin.localize`**. WebSocket clients and other components use the same JSON: `cmd` / `ok` / `event`. If Zero Bus is missing, this component still runs.
+
+Full command table: [zero-bus.en.md](zero-bus.en.md).
+
+```js
+payload: JSON.stringify({ cmd: "translate", text: "Play" })
+// stringify the envelope again; set receiver to plugin.localize
+```
+
+A miss returns `{"ok":true,"hit":false}` and does **not** echo the source text (same as the C++ API above). When the language actually changes, the service broadcasts `{"event":"language_changed","lang":"zh-CN"}`.
+
+This service does not expose COM `Skip` / `SetPanelType` / per-hwnd replacement. COM remains Windows-only.
+
 ## JS panels (Windows)
 
 JScript Panel / Spider Monkey Panel custom drawing cannot use the C++ service above. Use COM: `FooLocalize.Engine`. There is no COM API on macOS.

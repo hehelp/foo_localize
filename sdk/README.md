@@ -91,3 +91,5 @@ function _(text) {
 未安装组件时 `engine` 为 `null`，`_()` 回原文。
 
 `Enable` / `Disable` 只控制挂钩**换字**；`EnableTranslation` / `DisableTranslation` 只控制 `Translate()` **查词**。二者不要混用。详见 [docs/api.md](../docs/api.md)。
+
+装了 [Zero Bus](https://github.com/hehelp/foo_zero_bus) 时，Windows / macOS 还会注册 `plugin.localize`。协议见 [docs/zero-bus.md](../docs/zero-bus.md)。

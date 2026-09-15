@@ -126,6 +126,21 @@ GUID：
 | `localize_api` | `{5E8A1C3B-7042-4D16-9F28-A6B3D04E8C17}` |
 | `localize_notify` | `{C4D29B70-1E58-4A93-86F0-2B7C5D9A4138}` |
 
+## Zero Bus（Windows / macOS）
+
+在首选项 **动态多语引擎 → Zero Bus 服务** 打开「启用Zero Bus 服务」，并安装 [`foo_zero_bus`](https://github.com/hehelp/foo_zero_bus) 后，本组件注册服务 **`plugin.localize`**。WebSocket / 其它组件可用同一套 JSON：`cmd` / `ok` / `event`。未安装 Zero Bus 时本组件照常工作。
+
+完整 cmd 表：[zero-bus.md](zero-bus.md)。
+
+```js
+payload: JSON.stringify({ cmd: "translate", text: "Play" })
+// 信封再 JSON.stringify 一次；receiver 填 plugin.localize
+```
+
+`translate` 未命中返回 `{"ok":true,"hit":false}`，**不**回原文（与上面的 C++ API 一致）。语言实际变更时广播 `{"event":"language_changed","lang":"zh-CN"}`。
+
+本服务没有 COM 的 `Skip` / `SetPanelType` / 按 hwnd 换字闸。COM 仍仅 Windows。
+
 ## JS 面板（Windows）
 
 JScript Panel / Spider Monkey Panel 自绘文字不走 C++ 服务，用 COM：`FooLocalize.Engine`。macOS 没有这条接口。

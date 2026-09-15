@@ -238,4 +238,6 @@ C++ components: the header and a buildable sample live in `[sdk/](sdk/README.md)
 
 JScript Panel 3 (Windows only): paste `[sdk/foo_localize.js](sdk/foo_localize.js)` into a panel. Use `new ActiveXObject("FooLocalize.Engine")` and `gr.WriteText` (same as Klyrics). If the component is not installed, catch the error and keep English.
 
+With [Zero Bus](https://github.com/hehelp/foo_zero_bus) installed, the component also registers `plugin.localize` (Windows and macOS). See [Zero Bus](docs/zero-bus.en.md).
+
 See [Component API](docs/api.en.md). 中文：[docs/api.md](docs/api.md).

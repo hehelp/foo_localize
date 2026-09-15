@@ -236,4 +236,6 @@ C++ 组件：头文件和可编译示例在 `[sdk/](sdk/README.md)`。把 `[sdk/
 
 JScript Panel 3（仅 Windows）：把 `[sdk/foo_localize.js](sdk/foo_localize.js)` 贴进面板。用 `new ActiveXObject("FooLocalize.Engine")` 和 `gr.WriteText`（与快乐歌词相同）。未安装本组件时 `try/catch` 回退英文。
 
+若已安装 [Zero Bus](https://github.com/hehelp/foo_zero_bus)，本组件还会注册 `plugin.localize`（Windows / macOS）。见 [Zero Bus](docs/zero-bus.md)。
+
 说明见 [组件 API](docs/api.md)。English: [docs/api.en.md](docs/api.en.md)。
