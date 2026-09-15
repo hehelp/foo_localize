@@ -2,7 +2,11 @@
 
 # Dynamic Multilingual Engine (foo_localize)
 
-A runtime localization component for foobar2000. It does not patch the official binaries. UI English is replaced from external JSON language packs. Swap the pack to switch Simplified Chinese, Traditional Chinese, Japanese, Russian, Spanish, German, French, and others. Chinese display name **动态多语引擎**.
+It employs a non-destructive localization approach, requiring no modifications to the original official executables or DLL files. By loading external plain-text JSON language packs, it dynamically intercepts and replaces interface text at runtime. It offers seamless support not only for Simplified and Traditional Chinese but also for a wide range of languages—such as Japanese, Russian, Spanish, German, and French—simply by swapping the corresponding JSON dictionary.
+
+It offers deep compatibility with standard Win32 controls, JScript-based panels, and modern WebView2-based front-end UIs.
+
+Chinese display name **动态多语引擎**.
 
 Component version: `1.5.4`.
 
