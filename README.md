@@ -8,13 +8,20 @@ It offers deep compatibility with standard Win32 controls, JScript-based panels,
 
 Chinese display name **动态多语引擎**.
 
-Component version: `1.5.4`.
+Component version: `1.6`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
 
+### 1.6 (2026-09-17)
 
+- Windows / macOS: Online translation progress dialog now remembers and restores its window position, with compact UI layout and spacing (dialog width reduced to 3/4) and updated prompt text.
+- Windows / macOS: Language pack management context menu clarified to "Online translate all sources..." and "Online translate all untranslated sources...".
+- Windows / macOS: Preferences advanced rule editing dialog now dynamically measures label lengths to adaptively adjust control bounds, eliminating truncation for localized strings (e.g. Class, Control ID, Menu ID, Translation).
+- Windows: Fixed an issue where third-party context submenus (e.g., image-right plugin) failed to appear when dynamic translation was enabled due to Win32 menu handle and state handling.
+- Windows: Added ARM64EC CMake configuration and build support for broader architecture coverage.
+- Updated and synchronized language pack dictionaries.
 
 ### 1.5.4 (2026-09-15)
 
@@ -174,7 +181,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.5.3.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.6.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 

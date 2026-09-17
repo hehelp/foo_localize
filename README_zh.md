@@ -8,11 +8,20 @@
 
 英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.5.4`。
+当前组件版本：`1.6`。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.6（2026-09-17）
+
+- Windows / macOS：在线翻译进度对话框支持记忆并恢复窗口位置，优化控件间距与尺寸（窗口宽度缩减为 3/4），文案提示更新为「共有 %u 条待翻译词条」
+- Windows / macOS：语言包管理右键菜单明确为「在线翻译全部原文...」与「在线翻译全部未翻原文...」
+- Windows / macOS：首选项高级规则编辑界面增加自适应布局度量，根据中英文标签长度动态调整控件位置与尺寸，彻底解决「类名/控件 ID/菜单 ID/译文」等标签被截断的问题
+- Windows：修复动态翻译开启时，第三方插件（如图片右键插件等）弹出上下文子菜单可能失效/消失的 Win32 菜单句柄与状态处理问题
+- Windows：新增 ARM64EC 架构的 CMake 构建支持，扩展多架构编译支持
+- 语言包词典同步更新
 
 ### 1.5.4（2026-09-15）
 
@@ -168,7 +177,7 @@
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.5.3.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.6.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 
