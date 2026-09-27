@@ -8,11 +8,17 @@
 
 英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.6`。
+当前组件版本：`1.6.1`。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.6.1（2026-09-27）
+
+- Windows：修复首选项树里其它插件的页面节点（如 foo_zero_bus 的「Zero Bus」）被显示成整条窗口标题（如「偏好页：Zero Bus」）的问题；译文使用全角冒号时也能正确识别
+- macOS：「动态多语引擎」偏好页高度按内容自适应，不再撑满整个屏幕
+- 简中词典：统一 Zero Bus / JSplitter 首选项窗口标题译文
 
 ### 1.6（2026-09-17）
 
@@ -177,7 +183,7 @@
 
 ## 安装
 
-1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.6.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
+1. 打开 **[Releases](https://github.com/hehelp/foo_localize/releases)**，下载 `foo_localize-1.6.1.fb2k-component`（foobar 官方组件封装：一份 zip，内含 32 位、64 位与 macOS，安装时按架构自选）。
 2. 在 foobar：**文件 → 首选项 → 组件 → 安装**，选中该文件。
 3. 也可把对应架构的 DLL / `.component` 拷到上表目录后**完全退出再打开** foobar2000。
 

@@ -8,11 +8,17 @@ It offers deep compatibility with standard Win32 controls, JScript-based panels,
 
 Chinese display name **动态多语引擎**.
 
-Component version: `1.6`.
+Component version: `1.6.1`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.6.1 (2026-09-27)
+
+- Windows: Preferences tree nodes of other components (such as foo_zero_bus's "Zero Bus") no longer show a whole translated window title (such as "偏好页：Zero Bus") instead of their own name. Translations that use a full-width colon are handled too.
+- macOS: The **Dynamic Multilingual Engine** preferences page now fits its content instead of filling the whole screen.
+- Simplified Chinese: Unified the Zero Bus / JSplitter preferences window titles.
 
 ### 1.6 (2026-09-17)
 
@@ -181,7 +187,7 @@ Language packs stay in the user profile, not the program folder:
 
 ## Install
 
-1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.6.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
+1. Open **[Releases](https://github.com/hehelp/foo_localize/releases)** and download `foo_localize-1.6.1.fb2k-component` (official foobar package: one zip with 32-bit, 64-bit, and macOS; Install picks the matching binary).
 2. In foobar: **File → Preferences → Components → Install**, then pick that file.
 3. Or copy the matching DLL / `.component` into the folder above and **fully quit, then reopen** foobar2000.
 

@@ -3088,7 +3088,7 @@
   "WebView2 composition panel with playback IPC.": {"__default__":"带播放 IPC 的 WebView2 合成面板。","when":[{"class":"Edit","id":1051}]},
   "Utility": {"__default__":"实用工具","when":[{"class":"ATL:msctls_statusbar32","id":666}]},
   "Add New UI Element": {"__default__":"添加新的 UI 元素","when":[{"class":"#32770"}]},
-  "Preferences: Zero Bus": {"__default__":"偏好：零总线","when":[{"class":"#32770"}]},
+  "Preferences: Zero Bus": {"__default__":"Zero Bus","when":[{"class":"#32770"}]},
   "Preferences: JSplitter": {"__default__":"首选项：JSplitter","when":[{"class":"#32770"}]},
   "Add New UI Element...": {"__default__":"添加新的 UI 元素...","when":[{"class":"{483DF8E3-09E3-40d2-BEB8-67284CE3559F}"}]},
   "&Always on Top": "始终位于顶部(&A)",
