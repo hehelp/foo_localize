@@ -157,7 +157,7 @@ This repository hosts **release notes** and open language-pack JSON. The compone
 
 ![Upload Language pack](screenshot/win/upload_packs.png)
 
-![Submit review](screenshot/winsubmit_review.png)
+![Submit review](screenshot/win/submit_review.png)
 
 ### macOS
 

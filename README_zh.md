@@ -153,7 +153,7 @@
 
 ![贡献语言包](screenshot/win/upload_packs.png)
 
-![评价语言包](screenshot/winsubmit_review.png)
+![评价语言包](screenshot/win/submit_review.png)
 
 ### macOS
 
