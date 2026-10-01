@@ -8,11 +8,20 @@ It offers deep compatibility with standard Win32 controls, JScript-based panels,
 
 Chinese display name **动态多语引擎**.
 
-Component version: `1.6.1`.
+Component version: `1.7.0`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.7.0 (2026-10-01)
+
+- Windows / macOS: **View → Dynamic Multilingual Engine** adds **Download language packs** and **Contribute a translation**.
+- The download window lists community packs for the selected language (contributor, upload time, entry count, size, and score) and shows reviews. Download a pack, or download it and switch to it immediately.
+- One language can have many packs. Editing a downloaded cloud pack saves a local modified copy and leaves the original file unchanged.
+- Review packs you have downloaded. After a reinstall, an email verification code can recover your upload history.
+- Column widths in the download, upload, and review windows are remembered. The download window has a Refresh button.
+- Cloud service: https://foo-lang.klyrics.cn
 
 ### 1.6.1 (2026-09-27)
 
@@ -143,6 +152,12 @@ This repository hosts **release notes** and open language-pack JSON. The compone
 ![Preferences](screenshot/win/setting.png)
 
 ![Language pack manager](screenshot/win/manage.png)
+
+![Download Language pack](screenshot/win/download_packs.png)
+
+![Upload Language pack](screenshot/win/upload_packs.png)
+
+![Submit review](screenshot/winsubmit_review.png)
 
 ### macOS
 

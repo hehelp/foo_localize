@@ -8,11 +8,20 @@
 
 英文显示名 **Dynamic Multilingual Engine**。
 
-当前组件版本：`1.6.1`。
+当前组件版本：`1.7.0`。
 
 本仓库只托管**编译包说明**和开源的语言包 JSON，不公开插件源码。安装包在仓库的 **[Releases](https://github.com/hehelp/foo_localize/releases)** 页。
 
 ## 更新
+
+### 1.7.0（2026-10-01）
+
+- Windows / macOS：`查看 → 动态多语引擎` 增加「下载语言包」和「我要贡献翻译」
+- 下载窗口按所选语言列出社区语言包（贡献者、上传时间、词条数、大小、评分），并可查看评语。可下载，或下载后立刻切换
+- 同一语言可以有多份语言包。编辑已下载的云端包时，会另存为本地修改版，不覆盖原文件
+- 可评价已下载的语言包。换电脑或重装后，可用邮箱验证码找回自己上传的记录
+- 下载、上传、评价三个窗口会记住列表列宽。下载窗口可手动刷新服务端列表
+- 云端地址：https://foo-lang.klyrics.cn
 
 ### 1.6.1（2026-09-27）
 
@@ -139,6 +148,12 @@
 ![首选项](screenshot/win/setting-zh.png)
 
 ![语言包管理](screenshot/win/manage-zh.png)
+
+![下载语言包](screenshot/win/download_packs.png)
+
+![贡献语言包](screenshot/win/upload_packs.png)
+
+![评价语言包](screenshot/winsubmit_review.png)
 
 ### macOS
 
