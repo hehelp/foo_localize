@@ -8,11 +8,16 @@ It offers deep compatibility with standard Win32 controls, JScript-based panels,
 
 Chinese display name **动态多语引擎**.
 
-Component version: `1.7.0`.
+Component version: `1.7.1`.
 
 This repository hosts **release notes** and open language-pack JSON. The component source is not published. Get the installer from the repo **[Releases](https://github.com/hehelp/foo_localize/releases)** page.
 
 ## Updates
+
+### 1.7.1 (2026-10-07)
+
+- On startup, the component checks for updates and anonymously reports the plugin UI language and the current translation target language.
+- Fixed a crash when enabling **Zero Bus Service** if the Zero Bus server is not installed or not running.
 
 ### 1.7.0 (2026-10-01)
 
